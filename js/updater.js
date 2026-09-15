@@ -1,4 +1,4 @@
-window.CS_VERSION = "1.28.1";
+window.CS_VERSION = "1.29.2";
 window.Updater = (function () {
   var REMOTE = "https://raw.githubusercontent.com/whirledclassic/code-stacks/main/version.json?t=" + Date.now();
   function cmp(a, b) {
@@ -16,9 +16,10 @@ window.Updater = (function () {
     if (document.getElementById("update-banner")) return;
     var bar = document.createElement("div");
     bar.id = "update-banner"; bar.className = "update-banner";
-    bar.innerHTML = "<b>Update available</b> — v" + window.CS_VERSION + " vs GitHub v" + remote.version + ". Run <code>UPDATE.bat</code>. <button type=\"button\" id=\"upd-dismiss\">Later</button>";
+    bar.innerHTML = "<b>Update available</b> — this copy v" + window.CS_VERSION + " / GitHub v" + remote.version + ". Run UPDATE.bat or git pull. <button type=\"button\" id=\"upd-dismiss\">Later</button>";
     document.body.insertBefore(bar, document.body.firstChild);
-    document.getElementById("upd-dismiss").onclick = function () { bar.parentNode.removeChild(bar); };
+    var d = document.getElementById("upd-dismiss");
+    if (d) d.onclick = function () { bar.parentNode.removeChild(bar); };
   }
   function check() {
     var req = new XMLHttpRequest();
