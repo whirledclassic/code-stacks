@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "released": "2026-09-15",
-  "notes": "Engine v3: console + exports + stack, export key list, stack-line errors."
+  "notes": "Music tightens on low clock / combo; lock, combo, ship SFX."
 }
