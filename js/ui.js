@@ -1,8 +1,12 @@
 (function () {
   var COLORS = ["#3DE0FF", "#FF3D9A", "#7CFF6B", "#FFB020", "#C084FC", "#FF6B6B"];
-  var ui = { names: ["Ada", "Linus"], missionId: "greeter", state: null, ticker: null, lastTickSec: null, submitting: false };
+  var ui = { names: ["Ada", "Linus"], missionId: "greeter", state: null, lastTickSec: null, submitting: false };
   function $(id) { return document.getElementById(id); }
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ "&": "&", "<": "<", ">": ">", '"': """, "'": "&#39;" })[c]; }); }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&", "<": "<", ">": ">", '"': """, "'": "&#39;" }[c];
+    });
+  }
   function toast(msg) {
     var el = $("toast"); if (!el) return;
     el.textContent = msg; el.classList.remove("hidden");
@@ -25,7 +29,7 @@
     MISSIONS.forEach(function (m) {
       var b = document.createElement("button"); b.type = "button";
       b.className = "mission" + (m.id === ui.missionId ? " on" : "");
-      b.innerHTML = "<div class=\"mission-body\"><div class=\"top\"><strong>" + escapeHtml(m.title) + "</strong><em>" + escapeHtml(m.difficulty) + "</em></div><span>" + escapeHtml(m.blurb) + "</span></div>";
+      b.innerHTML = "<strong>" + escapeHtml(m.title) + "</strong> <em>" + escapeHtml(m.difficulty) + "</em><span>" + escapeHtml(m.blurb) + "</span>";
       b.onclick = function () { ui.missionId = m.id; renderMissions(); SFX.select(); };
       box.appendChild(b);
     });
@@ -39,8 +43,16 @@
     });
     $("splash").classList.add("hidden");
     $("game").classList.remove("hidden");
-    $("handoff").classList.remove("hidden");
     $("end").classList.add("hidden");
+    var solo = ui.names.length === 1;
+    $("game").classList.toggle("solo-mode", solo);
+    if (solo) {
+      $("handoff").classList.add("hidden");
+      Game.startTurn(ui.state);
+      $("line-input").focus();
+    } else {
+      $("handoff").classList.remove("hidden");
+    }
     paint();
     SFX.open();
   }
@@ -72,28 +84,21 @@
       d.innerHTML = "<div class=\"meta\"><span>" + escapeHtml(l.name) + "</span><span>" + (i + 1) + "</span></div><pre>" + escapeHtml(l.text) + "</pre>";
       list.appendChild(d);
     });
-    if (s.pending && s.phase === "fix") {
-      var g = document.createElement("div"); g.className = "sline ghost"; g.style.borderLeftColor = s.pending.color;
-      g.innerHTML = "<div class=\"meta\"><span>" + escapeHtml(s.pending.name) + " · broken</span></div><pre>" + escapeHtml(s.pending.text) + "</pre>";
-      list.appendChild(g);
-    }
-    var spec = $("spec"); spec.innerHTML = "<strong>" + escapeHtml(s.mission.title) + "</strong><ul>" + s.mission.spec.map(function (x) { return "<li>" + escapeHtml(x) + "</li>"; }).join("") + "</ul>";
+    var spec = $("spec");
+    spec.innerHTML = "<strong>" + escapeHtml(s.mission.title) + "</strong><ul>" + s.mission.spec.map(function (x) { return "<li>" + escapeHtml(x) + "</li>"; }).join("") + "</ul>";
     var checks = $("checks"); checks.innerHTML = "";
     (s.checkResults || []).forEach(function (c) {
       var row = document.createElement("div"); row.className = "check " + (c.passed ? "pass" : "fail");
-      row.textContent = (c.passed ? "✓ " : "· ") + c.name;
+      row.textContent = (c.passed ? "OK " : "· ") + c.name;
       checks.appendChild(row);
     });
     var players = $("players"); players.innerHTML = "";
     s.players.forEach(function (pl) {
       var row = document.createElement("div");
       row.className = "player" + (p && pl.id === p.id ? " on" : "") + (pl.alive ? "" : " dead");
-      row.innerHTML = "<span class=\"dot\" style=\"background:" + pl.color + "\"></span><span class=\"nm\">" + escapeHtml(pl.name) + "</span><span class=\"st\">" + pl.lines + " lines</span>";
+      row.innerHTML = "<span class=\"dot\" style=\"background:" + pl.color + "\"></span><span>" + escapeHtml(pl.name) + "</span><span>" + pl.lines + "</span>";
       players.appendChild(row);
     });
-    var feed = $("feed"); feed.innerHTML = s.log.slice(-12).map(function (item) {
-      return "<div class=\"item \" + item.kind + \">" + escapeHtml(item.text) + "</div>";
-    }).join("");
     if (s.phase === "handoff") {
       $("handoff").classList.remove("hidden");
       $("handoff-name").textContent = p ? p.name : "";
@@ -109,6 +114,8 @@
     $("handoff").classList.add("hidden");
     $("end-title").textContent = won ? "REPO SHIPS" : "STACK COLLAPSED";
     $("end-body").textContent = ui.state.winnerNote || "";
+    var art = $("end-art");
+    if (art) art.src = won ? "assets/win.jpg" : "assets/lose.jpg";
     if (won) SFX.win(); else SFX.out();
   }
   function submit() {
@@ -116,17 +123,14 @@
     ui.submitting = true;
     Game.submitLine(ui.state, $("line-input").value).then(function (res) {
       ui.submitting = false;
-      if (res.ok) { SFX.ok(); $("line-input").value = ""; if (window.FX) FX.flash("ok"); }
-      else { SFX.bad(); if (window.FX) { FX.flash("bad"); FX.shake(); } toast(res.message || "Broken."); }
+      if (res.ok) { SFX.ok(); $("line-input").value = ""; }
+      else { SFX.bad(); toast(res.message || "Broken."); }
       paint();
     });
   }
   function loop() {
     if (!ui.state) return;
     Game.tick(ui.state);
-    var left = Math.max(0, Math.ceil((ui.state.turnDeadline - Date.now()) / 1000));
-    if (left <= 10 && left !== ui.lastTickSec && ui.state.phase !== "handoff") SFX.tick();
-    ui.lastTickSec = left;
     paint();
   }
   window.UI = {
@@ -139,6 +143,13 @@
       };
       $("new-name").onkeydown = function (e) { if (e.keyCode === 13) $("add-player").click(); };
       $("btn-start").onclick = function () { SFX.unlock(); startGame(); };
+      if ($("btn-solo")) $("btn-solo").onclick = function () {
+        SFX.unlock();
+        ui.names = ["You"];
+        renderChips();
+        if ($("turn-sec")) $("turn-sec").value = 90;
+        startGame();
+      };
       $("btn-begin").onclick = beginTurn;
       $("btn-stack").onclick = submit;
       $("line-input").onkeydown = function (e) { if (e.keyCode === 13 && !e.shiftKey) { e.preventDefault(); submit(); } };
@@ -147,17 +158,12 @@
       $("btn-again").onclick = $("btn-quit").onclick;
       $("btn-replay").onclick = startGame;
       $("btn-mute").onclick = function () { $("btn-mute").textContent = SFX.toggle() ? "Sound off" : "Sound on"; };
-      $("btn-how").onclick = function () { $("how").classList.remove("hidden"); };
-      $("btn-how-close").onclick = function () { $("how").classList.add("hidden"); };
+      if ($("btn-how")) $("btn-how").onclick = function () { $("how").classList.remove("hidden"); };
+      if ($("btn-how-close")) $("btn-how-close").onclick = function () { $("how").classList.add("hidden"); };
       $("btn-download").onclick = function () {
         var exp = Game.exportRepo(ui.state);
         var blob = new Blob([exp.code], { type: "text/javascript" });
         var a = document.createElement("a"); a.href = (window.URL || window.webkitURL).createObjectURL(blob); a.download = exp.file; a.click();
-      };
-      document.onkeydown = function (e) {
-        if (ui.state && e.keyCode === 32 && ui.state.phase === "handoff" && document.activeElement.id !== "line-input") {
-          e.preventDefault(); beginTurn();
-        }
       };
       setInterval(loop, 250);
     }
