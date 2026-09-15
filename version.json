@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.25.0",
+  "version": "1.25.1",
   "released": "2026-09-15",
-  "notes": "assets/brand kit. Modern client chrome. Installer desk uses banner."
+  "notes": "QoL: Esc closes Settings/How. Last mission id saved."
 }
