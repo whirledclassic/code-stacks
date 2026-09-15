@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.19.0",
+  "version": "1.19.1",
   "released": "2026-09-15",
-  "notes": "Branded installer/updater desks, new slab icon and workshop hero."
+  "notes": "Client bar uses slab icon. INSTALL.bat opens installer.html."
 }

@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CODE STACKS Client</title>
   <link rel="stylesheet" href="css/client.css" />
 </head>
 <body class="client-shell">
   <div class="client-bar">
-    <span class="brand">CODE STACKS · client</span>
+    <span class="brand"><img src="assets/icon.jpg" alt="" width="22" height="22" style="vertical-align:middle;border-radius:6px;margin-right:8px" onerror="this.style.display='none'"/>CODE STACKS · client</span>
     <span class="acts">
       <button type="button" id="btn-reload">Reload table</button>
       <button type="button" id="btn-full">Full window</button>
@@ -17,7 +16,7 @@
     </span>
   </div>
   <iframe id="frame" class="client-frame" src="index.html" title="Code Stacks table" allow="autoplay"></iframe>
-  <div class="client-note">Play client. Click once inside the table so music can start. Leave PLAY.bat running.</div>
+  <div class="client-note">Play client. Click once inside the table so music can start. Leave PLAY.bat or CodeStacks.exe running.</div>
   <script>
     (function () {
       var frame = document.getElementById("frame");
