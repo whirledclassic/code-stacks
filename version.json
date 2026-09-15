@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "released": "2026-09-15",
-  "notes": "Stability patch: updater version sync, solo first-submit starts the turn, default mission."
+  "notes": "Clean line stays locked even if spec tests throw. Draft kept on fix."
 }
