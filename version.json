@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.32.0",
+  "version": "1.32.1",
   "released": "2026-09-15",
-  "notes": "START-HERE.md. Two clicks: INSTALL then ONECLICK."
+  "notes": "INSTALL.bat plays from this folder when the game is already here."
 }

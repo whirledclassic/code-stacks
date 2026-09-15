@@ -1,43 +1,15 @@
 # Start here
 
-You only need two clicks.
+Unzipped the game already? Stay in that folder.
 
-## 1. Get the game on this PC
+    INSTALL.bat
 
-Double-click **INSTALL.bat**
+That makes a Desktop shortcut and starts the game. It will not copy you somewhere else if index.html is already next to INSTALL.bat.
 
-(If you already cloned the folder, skip this.)
+Empty folder / first PC with no files:
 
-## 2. Play
+    INSTALL.bat
 
-Double-click **ONECLICK.bat**
+still downloads into %USERPROFILE%\code-stacks.
 
-or the Desktop shortcut **CODE STACKS**
-
-Click the game once so sound can start.
-
-## What the other files are
-
-| File | What it is |
-|---|---|
-| INSTALL.bat | First-time copy |
-| ONECLICK.bat | Everyday play |
-| PLAY.bat | Just the table (ONECLICK calls this) |
-| UPDATE.bat | Get new patches |
-| BUILD-INSTALLER.bat | Makes CodeStacksSetup.exe |
-| BUILD-CLIENT.bat | Makes CodeStacks.exe |
-| installer.html | Pretty setup screen |
-| client.html | Game window chrome |
-| index.html | The actual game |
-
-Ignore everything else until you are making the game.
-
-## Play test
-
-Practice solo → First Blood → type:
-
-    console.log("CODE STACKS");
-
-Tiny Blood → type:
-
-    print CODE STACKS
+Play later: Desktop **CODE STACKS** or ONECLICK.bat.
