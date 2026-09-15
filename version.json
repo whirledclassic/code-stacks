@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.29.2",
+  "version": "1.30.0",
   "released": "2026-09-15",
-  "notes": "Install docs. INSTALL.bat should finish with ONECLICK when present."
+  "notes": "Installer wizard UI. Only INSTALL.bat for first setup."
 }
