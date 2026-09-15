@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.33.1",
+  "version": "1.33.2",
   "released": "2026-09-15",
-  "notes": "Docs and wizard only tell you to click 1-INSTALL-AND-PLAY.bat"
+  "notes": "1-INSTALL-AND-PLAY starts PLAY immediately when index.html is present."
 }
