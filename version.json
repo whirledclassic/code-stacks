@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.28.0",
+  "version": "1.28.1",
   "released": "2026-09-15",
-  "notes": "Local profile stats and trophies. Names persist on this machine."
+  "notes": "Destroy vote no longer records 0 lines. Snapshot before wipe."
 }
