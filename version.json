@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "released": "2026-09-15",
-  "notes": "Humanized errors, clean-line streaks, mission starters, tighter core loop."
+  "notes": "Playable sandbox fix: worker rebuilt, main-thread fallback so lines actually run."
 }
