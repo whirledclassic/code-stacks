@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" /><title>CODE STACKS</title>
+<style>body{background:#111;color:#eee;font-family:sans-serif;padding:20px}button{padding:10px;margin:4px}#ok{color:#7cff6b}</style>
+</head>
+<body>
+<h1>CODE STACKS</h1>
+<p id="ok">If this sentence does not turn green, JavaScript is off or this is Internet Explorer.</p>
+<p>Type this line, then press Stack:</p>
+<p><input id="line" type="text" size="40" value='console.log("CODE STACKS");' /></p>
+<p><button onclick="go()">Stack</button></p>
+<p id="out"></p>
+<script>
+document.getElementById("ok").innerHTML = "JavaScript is running. Not IE. Stack the line.";
+function go() {
+  var t = document.getElementById("line").value;
+  var logs = [];
+  try {
+    var c = { log: function (x) { logs.push(String(x)); } };
+    (new Function("console", t))(c);
+    if (logs.length === 1 && logs[0] === "CODE STACKS") document.getElementById("out").innerHTML = "SHIPPED. You played the game.";
+    else document.getElementById("out").innerHTML = "Ran. Logged: " + logs.join(",");
+  } catch (e) {
+    document.getElementById("out").innerHTML = "Error: " + e.message;
+  }
+}
+</script>
+</body>
+</html>
