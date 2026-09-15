@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "released": "2026-09-15",
-  "notes": "Live exports bag, combo glow, smoother ship meter."
+  "notes": "Settings page: audio, match defaults, contrast, large text, reduce motion."
 }
