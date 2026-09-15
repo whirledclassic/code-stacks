@@ -5,41 +5,56 @@
 <title>CODE STACKS</title>
 <style>
 body{margin:0;background:#07080d;color:#e7edf7;font-family:Segoe UI,Tahoma,sans-serif;padding:28px}
-h1{margin:0 0 8px;font-size:36px} h1 span{color:#3de0ff}
+h1{margin:0;font-size:36px} h1 span{color:#3de0ff}
 .tag{color:#9eb0c7}
-button{padding:10px 16px;margin:8px 8px 0 0;border:0;border-radius:10px;background:#3de0ff;color:#041016;font-weight:700;cursor:pointer}
+button{padding:10px 16px;margin:8px 8px 0 0;border:0;border-radius:10px;background:#1b2230;color:#e7edf7;cursor:pointer}
+button.go{background:#3de0ff;color:#041016;font-weight:700}
 input{width:90%;padding:8px;background:#10141e;color:#e7edf7;border:1px solid #243044;border-radius:8px}
-#ok{color:#7cff6b} #out{margin-top:12px;min-height:24px}
-.bad{color:#ff6b6b}
+#ok{color:#7cff6b} .bad{color:#ff6b6b}
 </style>
 </head>
 <body>
 <h1>CODE <span>STACKS</span></h1>
-<p class="tag">One line. No loader. No update bar.</p>
-<p id="ok">JavaScript is off or this is the wrong browser.</p>
-<p>Line:</p>
-<p><input id="line" type="text" value='console.log("CODE STACKS");' /></p>
-<p><button type="button" onclick="go()">Stack line</button></p>
+<p class="tag">v1.36 one-file table</p>
+<p id="ok">If this line stays gray, use Chrome, not IE.</p>
+<p>
+<button type="button" class="go" onclick="mode='js';hint()">First Blood JS</button>
+<button type="button" onclick="mode='tiny';hint()">Tiny Blood</button>
+</p>
+<p id="spec"></p>
+<p><input id="line" type="text" /></p>
+<p><button type="button" class="go" onclick="go()">Stack line</button></p>
 <p id="out"></p>
 <script>
-document.getElementById("ok").innerHTML = "Ready. Press Stack line.";
+var mode = "js";
+document.getElementById("ok").innerHTML = "Ready.";
+function hint() {
+  var i = document.getElementById("line");
+  var s = document.getElementById("spec");
+  if (mode === "tiny") { s.innerHTML = "Tiny: print CODE STACKS"; i.value = "print CODE STACKS"; }
+  else { s.innerHTML = "JS: console.log(\"CODE STACKS\");"; i.value = "console.log(\"CODE STACKS\");"; }
+  document.getElementById("out").innerHTML = "";
+}
+hint();
 function go() {
   var t = document.getElementById("line").value;
+  var out = document.getElementById("out");
+  if (mode === "tiny") {
+    var s = t.replace(/^\s+|\s+$/g, "");
+    var p = s.indexOf(" ");
+    var cmd = (p < 0 ? s : s.slice(0, p)).toLowerCase();
+    var rest = p < 0 ? "" : s.slice(p + 1).replace(/^\s+|\s+$/g, "");
+    if ((cmd === "print" || cmd === "say") && rest === "CODE STACKS") out.innerHTML = "SHIPPED.";
+    else { out.className = "bad"; out.innerHTML = "Need: print CODE STACKS"; }
+    return;
+  }
   var logs = [];
   try {
     var c = { log: function (x) { logs.push(String(x)); } };
     (new Function("console", t))(c);
-    if (logs.length === 1 && logs[0] === "CODE STACKS") {
-      document.getElementById("out").className = "";
-      document.getElementById("out").innerHTML = "SHIPPED. That is the game.";
-    } else {
-      document.getElementById("out").className = "bad";
-      document.getElementById("out").innerHTML = "Ran. Logged: " + (logs.join(", ") || "nothing") + " — need exactly CODE STACKS";
-    }
-  } catch (e) {
-    document.getElementById("out").className = "bad";
-    document.getElementById("out").innerHTML = "Error: " + e.message;
-  }
+    if (logs.length === 1 && logs[0] === "CODE STACKS") { out.className = ""; out.innerHTML = "SHIPPED."; }
+    else { out.className = "bad"; out.innerHTML = "Logged: " + (logs.join(",") || "nothing"); }
+  } catch (e) { out.className = "bad"; out.innerHTML = e.message; }
 }
 </script>
 </body>
