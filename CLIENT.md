@@ -1,13 +1,9 @@
-# CODE STACKS client
+# Client
 
-## Play without building
-Double-click PLAY.bat. That is the client launch.
+Open with PLAY.bat or CodeStacks.exe (BUILD-CLIENT.bat).
+URL: http://127.0.0.1:8765/client.html
 
-## Build the .exe launcher (Windows)
-1. Install .NET Framework 3.5 or 4.x (common on Win7).
-2. Double-click BUILD-CLIENT.bat
-3. Double-click CodeStacks.exe
+Chrome --app mode when launched from the exe.
+Reload / Full window / Open in tab sit in the client chrome.
 
-The exe starts a local Python server when Python is on PATH, then opens Chrome in --app mode (or Firefox / default browser) at http://127.0.0.1:8765/client.html. OK on the dialog stops the server.
-
-This exe is a **launcher**, not a second JS engine. The game engine still runs in the browser window.
+Leave the PLAY / exe dialog running while you play.

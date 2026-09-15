@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.19.1",
+  "version": "1.20.0",
   "released": "2026-09-15",
-  "notes": "Client bar uses slab icon. INSTALL.bat opens installer.html."
+  "notes": "Win7+ compatibility docs. Client frame min-height for old Chrome."
 }
