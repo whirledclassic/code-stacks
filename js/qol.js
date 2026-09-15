@@ -1,35 +1,26 @@
 (function () {
   function $(id) { return document.getElementById(id); }
+  function hide(id) {
+    var el = $(id);
+    if (!el) return;
+    if (el.className.indexOf("hidden") === -1) el.className = el.className + " hidden";
+  }
   function boot() {
-    document.onkeydown = function (e) {
-      e = e || window.event;
-      var key = e.keyCode || e.which;
-      if (key === 27) {
-        var ids = ["settings", "how", "handoff"];
-        var i;
-        for (i = 0; i < ids.length; i++) {
-          var el = $(ids[i]);
-          if (el && el.className.indexOf("hidden") === -1 && ids[i] !== "handoff") el.className += " hidden";
-        }
-      }
-    };
-    var last = window.CSUtil && CSUtil.read ? CSUtil.read("cs_last_mission") : null;
-    if (last && window.MISSIONS) {
-      var ok = false, i;
-      for (i = 0; i < MISSIONS.length; i++) if (MISSIONS[i].id === last) ok = true;
-      if (ok && window.UI) {}
-      window._csLastMission = last;
+    if (document.addEventListener) {
+      document.addEventListener("keydown", function (e) {
+        e = e || window.event;
+        if ((e.keyCode || e.which) === 27) { hide("settings"); hide("how"); }
+      });
     }
     var box = $("missions");
-    if (box) {
+    if (box && box.addEventListener) {
       box.addEventListener("click", function (ev) {
         var t = ev.target;
         while (t && t !== box) {
           if (t.className && String(t.className).indexOf("mission") >= 0) {
             var strong = t.getElementsByTagName("strong")[0];
-            if (strong && window.MISSIONS && CSUtil && CSUtil.store) {
-              var title = strong.textContent;
-              var j;
+            if (strong && window.MISSIONS && window.CSUtil) {
+              var title = strong.textContent, j;
               for (j = 0; j < MISSIONS.length; j++) {
                 if (MISSIONS[j].title === title) CSUtil.store("cs_last_mission", MISSIONS[j].id);
               }
