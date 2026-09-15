@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.9.5",
+  "version": "1.10.0",
   "released": "2026-09-15",
-  "notes": "Visual pass: neon title, gradient buttons, stacked-line glow."
+  "notes": "Animated boot splash, client.html, Ledger mission."
 }
