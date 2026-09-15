@@ -1,0 +1,13 @@
+CODE STACKS on Windows 7
+
+1. In the code-stacks folder, double-click play.bat
+   OR double-click index.html
+
+2. If you want a local server and you already have Python:
+   python -m http.server 8765
+   then open http://localhost:8765
+
+Do NOT use python3 on Windows 7. That command does not exist there.
+
+If Chrome says localhost refused to connect, the server is not running.
+Use play.bat or open index.html instead.
