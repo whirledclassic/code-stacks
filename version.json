@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.25.2",
+  "version": "1.26.0",
   "released": "2026-09-15",
-  "notes": "Fix: stars/unlocks on vote phase. Esc no longer clobbers other key handlers."
+  "notes": "In-game Updates newsletter on the menu."
 }
