@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.31.1",
+  "version": "1.32.0",
   "released": "2026-09-15",
-  "notes": "Updater aligned. Setup remains CodeStacksSetup.exe / INSTALL.bat."
+  "notes": "START-HERE.md. Two clicks: INSTALL then ONECLICK."
 }
