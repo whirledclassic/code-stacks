@@ -5,73 +5,110 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>CODE STACKS</title>
 <style>
-body{margin:0;background:#07080d;color:#e7edf7;font-family:Segoe UI,sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:24px}
-h1{font-size:32px;margin:0 0 8px} h1 span{color:#3de0ff}
-.tag{color:#9eb0c7}
-button{padding:10px 16px;margin:6px 6px 6px 0;border:0;border-radius:10px;background:#3de0ff;color:#041016;font-weight:700;cursor:pointer}
-textarea{width:100%;height:70px;background:#10141e;color:#e7edf7;border:1px solid #243044;border-radius:8px;padding:8px;font-family:Consolas,monospace}
-pre,log{display:block;background:#0b0e14;border:1px solid #243044;padding:10px;min-height:40px;white-space:pre-wrap}
+html,body{margin:0;background:#07080d;color:#e7edf7;font-family:Segoe UI,Tahoma,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:24px}
+h1{font-size:34px;letter-spacing:-.03em;margin:0} h1 span{color:#3de0ff}
+.tag{color:#9eb0c7;margin:8px 0 18px}
+button{padding:10px 14px;margin:0 8px 8px 0;border:0;border-radius:10px;background:#1b2230;color:#e7edf7;cursor:pointer}
+button.go{background:#3de0ff;color:#041016;font-weight:700}
+button.on{outline:2px solid #3de0ff}
+textarea{width:96%;height:64px;background:#10141e;color:#e7edf7;border:1px solid #243044;border-radius:8px;padding:8px;font-family:Consolas,monospace}
+pre{background:#0b0e14;border:1px solid #243044;padding:10px;min-height:48px;white-space:pre-wrap}
 .ok{color:#7cff6b}.bad{color:#ff6b6b}
+#vote{display:none;margin-top:12px;padding:12px;border:1px solid #3de0ff;border-radius:10px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <h1>CODE <span>STACKS</span></h1>
-<p class="tag">Solo table. One line. Win7 file works here.</p>
+<p class="tag">Windows 7 table. One line per stack. Chrome or Firefox only.</p>
 <p>
-<button type="button" id="js">First Blood (JS)</button>
+<button type="button" id="js" class="on">First Blood</button>
 <button type="button" id="tiny">Tiny Blood</button>
 </p>
-<p id="spec">Pick a mission.</p>
-<textarea id="line" placeholder="one line"></textarea>
-<p><button type="button" id="stack">Stack line</button></p>
+<p id="spec">JS mission: console.log("CODE STACKS");</p>
+<textarea id="line"></textarea>
+<p><button type="button" class="go" id="stack">Stack line</button></p>
 <pre id="file">// empty</pre>
-<div id="out"></div>
+<p id="out" class="ok">Ready.</p>
+<div id="vote">
+<p>Repo is green. Export it or destroy it.</p>
+<button type="button" class="go" id="exp">Export</button>
+<button type="button" id="burn">Destroy</button>
+</div>
 </div>
 <script>
-(function(){
+(function () {
   var mission = "js";
   var lines = [];
-  function $(id){ return document.getElementById(id); }
-  function show(ok, msg){
+  var shipped = false;
+  function $(id) { return document.getElementById(id); }
+  function paint(ok, msg) {
     $("out").className = ok ? "ok" : "bad";
     $("out").innerHTML = msg;
     $("file").innerHTML = lines.join("\n") || "// empty";
   }
-  $("js").onclick = function(){ mission="js"; lines=[]; $("spec").innerHTML="JS: console.log(\"CODE STACKS\");"; show(true,"First Blood. One line."); };
-  $("tiny").onclick = function(){ mission="tiny"; lines=[]; $("spec").innerHTML="Tiny: print CODE STACKS"; show(true,"Tiny Blood. One line."); };
-  $("stack").onclick = function(){
-    var t = $("line").value.replace(/[\r\n]+/g,"");
-    if(!t){ show(false,"Empty line"); return; }
+  function reset(kind) {
+    mission = kind; lines = []; shipped = false;
+    $("vote").style.display = "none";
+    $("js").className = kind === "js" ? "on" : "";
+    $("tiny").className = kind === "tiny" ? "on" : "";
+    $("spec").innerHTML = kind === "tiny" ? "Tiny: print CODE STACKS" : "JS: console.log(\"CODE STACKS\");";
+    paint(true, "Stack one line.");
+  }
+  function ship() {
+    shipped = true;
+    $("vote").style.display = "block";
+    paint(true, "SHIPPED.");
+  }
+  $("js").onclick = function () { reset("js"); };
+  $("tiny").onclick = function () { reset("tiny"); };
+  $("stack").onclick = function () {
+    if (shipped) { paint(false, "Already shipped. Vote."); return; }
+    var t = $("line").value.replace(/[\r\n]+/g, "");
+    if (!t) { paint(false, "Empty line."); return; }
     lines.push(t);
     var code = lines.join("\n");
-    if(mission==="tiny"){
-      var logs=[], ok=true, msg="ran", i, raw=code.split("\n");
-      for(i=0;i<raw.length;i++){
-        var s=raw[i].replace(/^\s+|\s+$/g,"");
-        if(!s||s.charAt(0)==="#") continue;
-        var p=s.indexOf(" ");
-        var cmd=(p<0?s:s.slice(0,p)).toLowerCase();
-        var rest=p<0?"":s.slice(p+1).replace(/^\s+|\s+$/g,"");
-        if(cmd==="print"||cmd==="say") logs.push(rest);
-        else { ok=false; msg="unknown "+cmd; }
+    if (mission === "tiny") {
+      var logs = [], ok = true, msg = "ran", i, raw = code.split("\n");
+      for (i = 0; i < raw.length; i++) {
+        var s = raw[i].replace(/^\s+|\s+$/g, "");
+        if (!s || s.charAt(0) === "#") continue;
+        var p = s.indexOf(" ");
+        var cmd = (p < 0 ? s : s.slice(0, p)).toLowerCase();
+        var rest = p < 0 ? "" : s.slice(p + 1).replace(/^\s+|\s+$/g, "");
+        if (cmd === "print" || cmd === "say") logs.push(rest);
+        else { ok = false; msg = "unknown " + cmd; }
       }
-      if(!ok){ lines.pop(); show(false,msg); return; }
-      if(logs.length===1 && logs[0]==="CODE STACKS") show(true,"SHIPPED. Printed: "+logs[0]);
-      else show(true,"ran. Printed: "+(logs.join(" | ")||"(nothing)")+" — need exactly CODE STACKS");
+      if (!ok) { lines.pop(); paint(false, msg); return; }
+      if (logs.length === 1 && logs[0] === "CODE STACKS") ship();
+      else paint(true, "Printed: " + (logs.join(" | ") || "(nothing)") + " — need CODE STACKS");
       return;
     }
-    var logs=[], err=null;
-    try{
-      var fake={ log:function(x){ logs.push(String(x)); } };
-      fake.info=fake.warn=fake.error=fake.log;
-      var fn=new Function("console", code);
-      fn(fake);
-    }catch(e){ err=e.message; }
-    if(err){ lines.pop(); show(false,err); return; }
-    if(logs.length===1 && logs[0]==="CODE STACKS") show(true,"SHIPPED. Logged: "+logs[0]);
-    else show(true,"ran. Logged: "+(logs.join(" | ")||"(nothing)")+" — need exactly CODE STACKS");
+    var logs = [], err = null;
+    try {
+      var fake = { log: function (x) { logs.push(String(x)); } };
+      fake.info = fake.warn = fake.error = fake.log;
+      (new Function("console", code))(fake);
+    } catch (e) { err = e.message; }
+    if (err) { lines.pop(); paint(false, err); return; }
+    if (logs.length === 1 && logs[0] === "CODE STACKS") ship();
+    else paint(true, "Logged: " + (logs.join(" | ") || "(nothing)") + " — need CODE STACKS");
+  };
+  $("exp").onclick = function () {
+    var name = mission === "tiny" ? "main.tiny" : "main.js";
+    var blob = new Blob([lines.join("\n") + "\n"], { type: "text/plain" });
+    if (window.navigator && navigator.msSaveOrOpenBlob) { navigator.msSaveOrOpenBlob(blob, name); return; }
+    var a = document.createElement("a");
+    a.href = (window.URL || window.webkitURL).createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    paint(true, "Exported " + name);
+  };
+  $("burn").onclick = function () {
+    lines = []; shipped = false; $("vote").style.display = "none";
+    paint(false, "Destroyed.");
   };
 })();
 </script>
