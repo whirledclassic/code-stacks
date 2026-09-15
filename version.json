@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.29.0",
+  "version": "1.29.1",
   "released": "2026-09-15",
-  "notes": "CodeStacks.exe now starts PLAY.bat from the game folder."
+  "notes": "ONECLICK.bat: shortcut + exe + play."
 }
