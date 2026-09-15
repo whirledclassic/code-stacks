@@ -1,18 +1,12 @@
 window.CS_NEWS = [
+  { v: "1.27.1", date: "2026-09-15", text: "Esc closes Updates. Tiny Blood is a second language: print CODE STACKS." },
+  { v: "1.27.0", date: "2026-09-15", text: "Tiny language runner. Mission Tiny Blood. runScript honors mission.language." },
   { v: "1.26.0", date: "2026-09-15", text: "In-game Updates panel on the menu. Scroll for older patches." },
-  { v: "1.25.2", date: "2026-09-15", text: "Stars now count when the export/destroy vote opens, so the next mission unlocks. Esc no longer steals other keys." },
+  { v: "1.25.2", date: "2026-09-15", text: "Stars count on the export/destroy vote so the next mission unlocks." },
   { v: "1.25.1", date: "2026-09-15", text: "Esc closes Settings. Last mission id is remembered." },
-  { v: "1.25.0", date: "2026-09-15", text: "Brand kit folder assets/brand. Modern client chrome." },
-  { v: "1.24.1", date: "2026-09-15", text: "Exported files get a CODE STACKS banner. nextTarget helper." },
-  { v: "1.24.0", date: "2026-09-15", text: "After a ship, vote Export project or Destroy it." },
-  { v: "1.23.0", date: "2026-09-15", text: "Language adapter API. JavaScript is still the only runner." },
-  { v: "1.22.0", date: "2026-09-15", text: "Stacked lines animate in. Combo and low clock pulse." },
-  { v: "1.21.0", date: "2026-09-15", text: "SETUP.bat: shortcut, optional exe, play." },
-  { v: "1.20.0", date: "2026-09-15", text: "Win7 compatibility docs. Chrome 109 / Firefox 115 ESR." },
-  { v: "1.18.0", date: "2026-09-15", text: "BUILD-CLIENT.bat builds CodeStacks.exe launcher." },
-  { v: "1.16.0", date: "2026-09-15", text: "INSTALL / PLAY / UPDATE bats. Win7 zip download." },
+  { v: "1.24.0", date: "2026-09-15", text: "After a ship, vote Export or Destroy." },
+  { v: "1.16.0", date: "2026-09-15", text: "INSTALL / PLAY / UPDATE. Win7 zip download." },
   { v: "1.14.0", date: "2026-09-15", text: "Settings: audio, contrast, large text, reduce motion." },
-  { v: "1.11.0", date: "2026-09-15", text: "Combo, ship meter, mission stars." },
   { v: "1.0", date: "2026-09-15", text: "First Blood. One line. Keep the repo alive." }
 ];
 (function () {
