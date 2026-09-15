@@ -9,6 +9,7 @@ window.Trophies = (function () {
     { id: "five_ships", title: "Foreman", text: "Ship 5 repos on this machine." }
   ];
   function grant(id) {
+    if (!window.Profile) return false;
     var d = Profile.load();
     if (d.trophies[id]) return false;
     d.trophies[id] = { at: Date.now() };
@@ -36,15 +37,29 @@ window.Trophies = (function () {
       var on = !!(d.trophies && d.trophies[t.id]);
       var el = document.createElement("div");
       el.className = "news-item";
-      el.innerHTML = "<strong>" + (on ? "★ " : "· ") + t.title + "</strong><p>" + t.text + (on ? " — earned" : "") + "</p>";
+      el.innerHTML = "<strong>" + (on ? "* " : ". ") + t.title + "</strong><p>" + t.text + (on ? " — earned" : "") + "</p>";
       box.appendChild(el);
     }
     var stats = document.getElementById("profile-stats");
-    if (stats) {
-      stats.textContent = "Ships " + (d.ships || 0) + " · Burns " + (d.burns || 0) + " · Lines " + (d.lines || 0) + " · Best combo x" + (d.bestCombo || 0);
+    if (stats) stats.textContent = "Ships " + (d.ships || 0) + " · Burns " + (d.burns || 0) + " · Lines " + (d.lines || 0) + " · Best combo x" + (d.bestCombo || 0);
+  }
+  function ensure() {
+    var actions = document.querySelector(".hero-actions");
+    if (actions && !document.getElementById("btn-trophies")) {
+      var b = document.createElement("button");
+      b.id = "btn-trophies"; b.type = "button"; b.className = "btn ghost";
+      b.appendChild(document.createTextNode("Trophies"));
+      actions.appendChild(b);
+    }
+    if (!document.getElementById("trophies")) {
+      var o = document.createElement("div");
+      o.id = "trophies"; o.className = "overlay hidden";
+      o.innerHTML = "<div class=\"card\"><h2>Trophies</h2><p id=\"profile-stats\"></p><div id=\"trophy-list\"></div><button class=\"btn primary\" id=\"btn-trophies-close\" type=\"button\">Close</button></div>";
+      document.body.appendChild(o);
     }
   }
   function boot() {
+    ensure();
     var open = document.getElementById("btn-trophies");
     var panel = document.getElementById("trophies");
     var close = document.getElementById("btn-trophies-close");
