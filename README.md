@@ -1,14 +1,20 @@
 # CODE STACKS
-Turn-based programming. One line of JavaScript per turn. The file must still run. Next player stacks until the spec is green.
+### Code Stacker
 
-- Players: [DOCS.md](DOCS.md)
-- Developers: [DEVELOPMENT.md](DEVELOPMENT.md)
+Turn-based programming. One line of JavaScript. The file must still run. Spec green, then vote export or destroy.
 
-## Play on Windows
-```bat
-cd C:\\Users\\Josh\\code-stacks
-python -m http.server 8765
-```
-Open http://localhost:8765 — click once so music can start.
+[OVERVIEW.md](OVERVIEW.md) · [DOCS.md](DOCS.md) · [DEVELOPMENT.md](DEVELOPMENT.md) · [COMPAT.md](COMPAT.md)
 
-Update: `git pull origin main` or `update.bat`
+https://github.com/whirledclassic/code-stacks
+
+## Play
+
+    cd %USERPROFILE%\\code-stacks
+    git pull origin main
+    SETUP.bat
+
+Or PLAY.bat. Client: http://127.0.0.1:8765/client.html
+
+## Prove-it
+
+Practice solo → First Blood → `console.log("CODE STACKS");` → Export or Destroy.
