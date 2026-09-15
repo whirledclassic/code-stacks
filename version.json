@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.31.0",
+  "version": "1.31.1",
   "released": "2026-09-15",
-  "notes": "CodeStacksSetup.exe — WinForms installer window. BUILD-INSTALLER.bat"
+  "notes": "Updater aligned. Setup remains CodeStacksSetup.exe / INSTALL.bat."
 }
