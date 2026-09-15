@@ -1,6 +1,6 @@
 (function () {
   var COLORS = ["#3DE0FF", "#FF3D9A", "#7CFF6B", "#FFB020", "#C084FC", "#FF6B6B"];
-  var ui = { names: ["Ada", "Linus"], missionId: "first-blood", state: null, submitting: false };
+  var ui = { names: ["Ada", "Linus"], missionId: "first-blood", state: null, submitting: false, ended: false };
   function $(id) { return document.getElementById(id); }
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -28,7 +28,7 @@
     var box = $("missions"); if (!box || !window.MISSIONS) return; box.innerHTML = "";
     MISSIONS.forEach(function (m) {
       var locked = window.Progress && !Progress.isUnlocked(m.id);
-      var stars = window.Progress ? (Progress.load().stars[m.id] || 0) : 0;
+      var stars = window.Progress ? ((Progress.load().stars || {})[m.id] || 0) : 0;
       var b = document.createElement("button"); b.type = "button";
       b.className = "mission" + (m.id === ui.missionId ? " on" : "") + (locked ? " locked" : "");
       b.innerHTML = "<strong>" + escapeHtml(m.title) + "</strong> <em>" + escapeHtml(m.difficulty) + (stars ? " · " + stars + "*" : "") + "</em><span>" + (locked ? "Ship the previous mission to unlock." : escapeHtml(m.blurb)) + "</span>";
@@ -40,10 +40,9 @@
     });
   }
   function startGame() {
+    ui.ended = false;
     if (!ui.names.length) ui.names = ["You"];
-    if (window.Progress && !Progress.isUnlocked(ui.missionId)) {
-      toast("That mission is locked."); return;
-    }
+    if (window.Progress && !Progress.isUnlocked(ui.missionId)) { toast("That mission is locked."); return; }
     var mission = MISSIONS.filter(function (m) { return m.id === ui.missionId; })[0] || MISSIONS[0];
     ui.state = Game.create({
       names: ui.names, mission: mission,
@@ -55,23 +54,16 @@
     $("end").classList.add("hidden");
     var solo = ui.names.length === 1;
     $("game").classList.toggle("solo-mode", solo);
-    if (solo) {
-      $("handoff").classList.add("hidden");
-      Game.startTurn(ui.state);
-      $("line-input").focus();
-    } else {
-      $("handoff").classList.remove("hidden");
-    }
-    paint();
-    SFX.open();
+    if (solo) { $("handoff").classList.add("hidden"); Game.startTurn(ui.state); $("line-input").focus(); }
+    else $("handoff").classList.remove("hidden");
+    paint(); SFX.open();
   }
   function beginTurn() {
     Game.startTurn(ui.state);
     $("handoff").classList.add("hidden");
     $("line-input").value = ui.state.draft || "";
     $("line-input").focus();
-    paint();
-    SFX.turn();
+    paint(); SFX.turn();
   }
   function paintHooks(s) {
     var combo = $("combo-pill");
@@ -134,17 +126,19 @@
         $("players").appendChild(row);
       });
     }
-    if (s.phase === "handoff") {
+    if (s.phase === "handoff" && !ui.ended) {
       $("handoff").classList.remove("hidden");
       if ($("handoff-name")) $("handoff-name").textContent = p ? p.name : "";
     }
-    if (s.phase === "win" || s.phase === "lose") showEnd(s.phase === "win");
+    if ((s.phase === "win" || s.phase === "lose") && !ui.ended) showEnd(s.phase === "win");
     if (s.lastResult && $("console")) {
       var r = s.lastResult;
       $("console").innerHTML = "<div class=\"" + (r.ok ? "ok" : "bad") + "\">" + escapeHtml(r.message || (r.ok ? "ran" : "error")) + "</div>";
     }
   }
   function showEnd(won) {
+    if (ui.ended) return;
+    ui.ended = true;
     $("end").classList.remove("hidden");
     $("handoff").classList.add("hidden");
     $("end-title").textContent = won ? "REPO SHIPS" : "STACK COLLAPSED";
@@ -165,6 +159,14 @@
       paint();
     });
   }
+  function backToMenu() {
+    ui.state = null; ui.ended = false;
+    $("game").classList.add("hidden");
+    $("splash").classList.remove("hidden");
+    $("handoff").classList.add("hidden");
+    $("end").classList.add("hidden");
+    renderMissions();
+  }
   window.UI = {
     boot: function () {
       renderChips(); renderMissions();
@@ -184,16 +186,9 @@
       $("btn-stack").onclick = submit;
       $("line-input").onkeydown = function (e) { if (e.keyCode === 13 && !e.shiftKey) { e.preventDefault(); submit(); } };
       $("btn-hint").onclick = function () { var h = Game.useHint(ui.state); if (h) toast(h); };
-      $("btn-quit").onclick = function () {
-        ui.state = null;
-        $("game").classList.add("hidden");
-        $("splash").classList.remove("hidden");
-        $("handoff").classList.add("hidden");
-        $("end").classList.add("hidden");
-        renderMissions();
-      };
-      $("btn-again").onclick = $("btn-quit").onclick;
-      $("btn-replay").onclick = startGame;
+      $("btn-quit").onclick = backToMenu;
+      $("btn-again").onclick = backToMenu;
+      $("btn-replay").onclick = function () { ui.ended = false; startGame(); };
       $("btn-mute").onclick = function () { $("btn-mute").textContent = SFX.toggle() ? "Sound off" : "Sound on"; };
       if ($("btn-how")) $("btn-how").onclick = function () { $("how").classList.remove("hidden"); };
       if ($("btn-how-close")) $("btn-how-close").onclick = function () { $("how").classList.add("hidden"); };
@@ -202,7 +197,11 @@
         var blob = new Blob([exp.code], { type: "text/javascript" });
         var a = document.createElement("a"); a.href = (window.URL || window.webkitURL).createObjectURL(blob); a.download = exp.file; a.click();
       };
-      setInterval(function () { if (ui.state) { Game.tick(ui.state); paint(); } }, 250);
+      setInterval(function () {
+        if (!ui.state || ui.ended) return;
+        Game.tick(ui.state);
+        paint();
+      }, 250);
     }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", UI.boot);
