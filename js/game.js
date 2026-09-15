@@ -1,5 +1,8 @@
 window.Game = (function () {
   function uid() { return Math.random().toString(36).slice(2, 8); }
+  function langOf(state) {
+    return (state && state.mission && state.mission.language) || "javascript";
+  }
   function createPlayers(names) {
     var palette = ["#3DE0FF", "#FF3D9A", "#7CFF6B", "#FFB020", "#C084FC", "#FF6B6B"];
     return names.map(function (name, i) {
@@ -14,13 +17,13 @@ window.Game = (function () {
     var names = (opts.names && opts.names.length) ? opts.names : ["You"];
     var mission = opts.mission || (window.MISSIONS && MISSIONS[0]);
     return {
-      language: "JavaScript", mission: mission, players: createPlayers(names),
+      language: langOf({ mission: mission }), mission: mission, players: createPlayers(names),
       turnIndex: 0, lines: [], lastGood: [], pending: null, phase: "handoff",
       turnDeadline: Date.now() + (opts.turnSeconds || 45) * 1000, turnSeconds: opts.turnSeconds || 45,
       failsToOut: opts.failsToOut || 3, draft: "", lastResult: null, checkResults: emptyChecks(mission),
       hintUsed: false, justEliminated: false, busy: false, combo: 0,
       vote: { export: 0, destroy: 0 },
-      log: [{ t: Date.now(), kind: "sys", text: "Repo opened." }],
+      log: [{ t: Date.now(), kind: "sys", text: "Repo opened. Language: " + ((mission && mission.language) || "javascript") }],
       startedAt: Date.now(), winnerNote: ""
     };
   }
@@ -70,9 +73,7 @@ window.Game = (function () {
       return { done: false, export: state.vote.export, destroy: state.vote.destroy, need: need };
     }
     if (state.vote.destroy > state.vote.export) {
-      state.lines = [];
-      state.lastGood = [];
-      state.phase = "lose";
+      state.lines = []; state.lastGood = []; state.phase = "lose";
       state.winnerNote = "The table voted to destroy the repo.";
       return { done: true, result: "destroy" };
     }
@@ -91,19 +92,20 @@ window.Game = (function () {
     var pending = { id: uid(), text: text, author: player.id, name: player.name, color: player.color, at: Date.now() };
     var trial = state.lines.concat([pending]);
     var code = trial.map(function (l) { return l.text; }).join("\n");
+    var lang = langOf(state);
     state.busy = true; state.pending = pending;
-    return Engine.runScript(code).then(function (result) {
+    return Engine.runScript(code, lang).then(function (result) {
       state.busy = false; state.lastResult = result;
       if (!result.ok) {
         player.fails += 1; player.fixes += 1; player.streak = 0; state.combo = 0; state.phase = "fix"; state.draft = text;
         if (player.fails >= state.failsToOut) { eliminate(state, player, player.fails + " failed runs"); return { ok: false, eliminated: true, result: result }; }
-        return { ok: false, result: result, message: "Fix that line. " + (state.failsToOut - player.fails) + " chance(s) left." };
+        return { ok: false, result: result, message: (result.message || "Broken.") + " Fix that line. " + (state.failsToOut - player.fails) + " chance(s) left." };
       }
       state.lines = trial; state.lastGood = trial.slice(); state.pending = null;
       player.lines += 1; player.fails = 0; player.streak = (player.streak || 0) + 1; state.combo = player.streak; state.draft = "";
       if (result.exportsKeys) state.exportKeys = result.exportsKeys;
       if (player.streak >= 3) state.turnDeadline += 4000;
-      return Engine.runTests(code, state.mission.checks || [], (state.mission && state.mission.language) || "javascript").then(function (tests) {
+      return Engine.runTests(code, state.mission.checks || [], lang).then(function (tests) {
         if (tests.checks && tests.checks.length) state.checkResults = tests.checks;
         if (tests.passed) {
           state.phase = "vote";
@@ -131,7 +133,7 @@ window.Game = (function () {
     return state.mission.hint;
   }
   function exportRepo(state) {
-    var code = source(state) || "// empty stack";
+    var code = source(state) || "# empty stack\n";
     return { file: state.mission.file, code: code + "\n", readme: "# " + state.mission.title + "\n", zip: null };
   }
   return { create: create, current: current, alive: alive, source: source, submitLine: submitLine, tick: tick, startTurn: startTurn, exportRepo: exportRepo, useHint: useHint, castVote: castVote };
