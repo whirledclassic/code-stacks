@@ -11,12 +11,14 @@ window.Progress = (function () {
   function isUnlocked(id) {
     var i = ORDER.indexOf(id);
     if (i <= 0) return true;
+    if (i < 0) return true;
     var prev = ORDER[i - 1];
     var data = load();
     return !!(data.stars[prev] && data.stars[prev] >= 1);
   }
   function starsFor(state) {
-    if (!state || state.phase !== "win") return 0;
+    if (!state) return 0;
+    if (state.phase !== "win" && state.phase !== "vote") return 0;
     var fails = 0, lines = state.lines.length, checks = (state.mission.checks || []).length;
     for (var i = 0; i < state.players.length; i++) fails += (state.players[i].fixes || 0);
     var stars = 1;
@@ -28,8 +30,9 @@ window.Progress = (function () {
     var data = load();
     var id = state.mission.id;
     var got = starsFor(state);
+    if (got < 1) got = 1;
     if (!data.stars[id] || data.stars[id] < got) data.stars[id] = got;
-    data.commits = (data.commits || 0) + state.lines.length;
+    data.commits = (data.commits || 0) + (state.lines ? state.lines.length : 0);
     save(data);
     return got;
   }
