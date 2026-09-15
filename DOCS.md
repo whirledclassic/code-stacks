@@ -1,4 +1,6 @@
-# CODE STACKS docs
+# CODE STACKS — player docs
+
+Engineers changing the game: read [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## Rules
 1. One line per turn.
@@ -13,13 +15,10 @@
 Practice solo skips handoff. Music starts on first click. Mute stops music and SFX.
 
 ## Missions
-- First Blood: console.log("CODE STACKS");
+- First Blood: console.log(\"CODE STACKS\");
 - Greeter: function greet(name)
 - Adder: function add(a, b)
 - Toolbox: exports.clamp, exports.pad, exports.once
 
-## Engine
-Sandbox gets `console` and `exports`. Checks append to the player file and throw to fail.
-
-## Add a mission
-Edit js/missions.js. Add id, title, spec[], hint, and checks[] with `code` that throws if the requirement is missing.
+## Add a mission (short)
+Edit js/missions.js. Full checklist and engine contract are in DEVELOPMENT.md.
