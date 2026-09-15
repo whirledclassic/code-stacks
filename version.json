@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "released": "2026-09-15",
-  "notes": "Clean line stays locked even if spec tests throw. Draft kept on fix."
+  "notes": "Visual pass: neon title, gradient buttons, stacked-line glow."
 }
