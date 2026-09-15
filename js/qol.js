@@ -9,7 +9,9 @@
     if (document.addEventListener) {
       document.addEventListener("keydown", function (e) {
         e = e || window.event;
-        if ((e.keyCode || e.which) === 27) { hide("settings"); hide("how"); }
+        if ((e.keyCode || e.which) === 27) {
+          hide("settings"); hide("how"); hide("news");
+        }
       });
     }
     var box = $("missions");
