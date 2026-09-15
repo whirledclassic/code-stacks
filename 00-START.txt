@@ -1,0 +1,7 @@
+CODE STACKS
+
+Click only this:
+
+  1-INSTALL-AND-PLAY.bat
+
+Ignore every other file in this folder.
