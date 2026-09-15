@@ -1,20 +1,13 @@
 # Languages
 
-This build: **JavaScript only**.
+Ready now: **JavaScript**.
 
-`Engine.languages()` returns runners. `Engine.hasLanguage(id)` is true for `javascript` / `js`.
-Any other id fails with a clear engine error instead of pretending to run.
+Adapter API:
 
-## Ready to add another language?
+    Engine.registerLanguage(id, { run: fn, test: fn })
+    Engine.hasLanguage(id)
+    Engine.languages()
 
-Not in the browser copy, not yet.
+Missions may set `language: "javascript"`. The match passes that id into run/test.
 
-A second language needs:
-1. A runner that can execute one file with a timeout (WASM interpreter or a local server).
-2. A way to inject `console` + `exports` equivalents.
-3. Mission checks written in that language or a shared JSON test format.
-4. Win7-safe delivery (no huge toolchain).
-
-Until that runner exists, extra languages would be labels on a JS sandbox. That is not a language.
-
-Next honest step after JS missions feel deep enough: pick ONE of Python (Pyodide, heavy) or a tiny custom lang. Do not add a dropdown first.
+A second language is ready to *plug in* when a runner exists. It is not ready to ship as a dropdown. Python/Lua still have no executor in this repo.

@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.22.0",
+  "version": "1.23.0",
   "released": "2026-09-15",
-  "notes": "Animated stack lines, combo pulse, low-clock timer. Reduce-motion still wins."
+  "notes": "Language adapter API. JS still the only built-in runner."
 }
