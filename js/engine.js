@@ -1,5 +1,6 @@
 window.Engine = (function () {
   var LIMITS = { timeoutMs: 1200, maxLogs: 50 };
+  var adapters = {};
   function captureFactory() {
     return function capture() {
       var logs = [];
@@ -30,8 +31,21 @@ window.Engine = (function () {
     try { new Function(code); return { ok: true }; }
     catch (e) { return { ok: false, type: "syntax", message: e.message, logs: [], checks: [] }; }
   }
-  function hasLanguage(id) { return !id || id === "javascript" || id === "js" || id === "JavaScript"; }
-  function languages() { return [{ id: "javascript", title: "JavaScript", ready: true }]; }
+  function hasLanguage(id) {
+    if (!id || id === "javascript" || id === "js" || id === "JavaScript") return true;
+    return !!(adapters[id] && typeof adapters[id].run === "function");
+  }
+  function languages() {
+    var list = [{ id: "javascript", title: "JavaScript", ready: true }];
+    var k;
+    for (k in adapters) if (adapters[k] && adapters[k].run) list.push({ id: k, title: k, ready: true });
+    return list;
+  }
+  function registerLanguage(id, adapter) {
+    if (!id || !adapter || typeof adapter.run !== "function") return false;
+    adapters[id] = adapter;
+    return true;
+  }
   function runLocal(payload) {
     var syn = syntaxCheck(payload.code);
     if (!syn.ok) return syn;
@@ -63,16 +77,18 @@ window.Engine = (function () {
     return { ok: true, passed: all && checks.length > 0, type: "tests", message: all ? "All tests passed." : "Repo runs, spec is not green yet.", logs: cap.logs, checks: results, exportsKeys: Object.keys(exportsObj) };
   }
   function runScript(code, lang) {
+    if (adapters[lang] && adapters[lang].run) return Promise.resolve(adapters[lang].run(code));
     if (!hasLanguage(lang)) return Promise.resolve({ ok: false, type: "engine", message: "No runner for " + lang + ". JavaScript only." });
     var syn = syntaxCheck(code);
     if (!syn.ok) return Promise.resolve(syn);
     return Promise.resolve(runLocal({ mode: "run", code: String(code || "") }));
   }
   function runTests(code, checks, lang) {
+    if (adapters[lang] && adapters[lang].test) return Promise.resolve(adapters[lang].test(code, checks));
     if (!hasLanguage(lang)) return Promise.resolve({ ok: false, passed: false, type: "engine", message: "No runner for " + lang + ".", checks: [] });
     var syn = syntaxCheck(code);
     if (!syn.ok) return Promise.resolve({ ok: false, passed: false, type: syn.type, message: syn.message, logs: [], checks: [] });
     return Promise.resolve(runLocal({ mode: "tests", code: String(code || ""), checks: checks || [] }));
   }
-  return { syntaxCheck: syntaxCheck, runScript: runScript, runTests: runTests, runLocal: runLocal, LIMITS: LIMITS, languages: languages, hasLanguage: hasLanguage };
+  return { syntaxCheck: syntaxCheck, runScript: runScript, runTests: runTests, runLocal: runLocal, LIMITS: LIMITS, languages: languages, hasLanguage: hasLanguage, registerLanguage: registerLanguage };
 })();
