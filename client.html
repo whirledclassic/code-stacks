@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
 <title>CODE STACKS</title>
-<script>
-window.location.replace("play.html");
-</script>
+<style>
+body{margin:0;background:#07080d;color:#e7edf7;font-family:Segoe UI,Tahoma,sans-serif;padding:28px}
+h1{margin:0 0 8px;font-size:36px} h1 span{color:#3de0ff}
+.tag{color:#9eb0c7}
+button{padding:10px 16px;margin:8px 8px 0 0;border:0;border-radius:10px;background:#3de0ff;color:#041016;font-weight:700;cursor:pointer}
+input{width:90%;padding:8px;background:#10141e;color:#e7edf7;border:1px solid #243044;border-radius:8px}
+#ok{color:#7cff6b} #out{margin-top:12px;min-height:24px}
+.bad{color:#ff6b6b}
+</style>
 </head>
 <body>
-<p>Opening the table…</p>
-<p>If nothing happens, open <a href="play.html">play.html</a> or <a href="PLAY-ME.htm">PLAY-ME.htm</a> in this folder.</p>
+<h1>CODE <span>STACKS</span></h1>
+<p class="tag">One line. No loader. No update bar.</p>
+<p id="ok">JavaScript is off or this is the wrong browser.</p>
+<p>Line:</p>
+<p><input id="line" type="text" value='console.log("CODE STACKS");' /></p>
+<p><button type="button" onclick="go()">Stack line</button></p>
+<p id="out"></p>
+<script>
+document.getElementById("ok").innerHTML = "Ready. Press Stack line.";
+function go() {
+  var t = document.getElementById("line").value;
+  var logs = [];
+  try {
+    var c = { log: function (x) { logs.push(String(x)); } };
+    (new Function("console", t))(c);
+    if (logs.length === 1 && logs[0] === "CODE STACKS") {
+      document.getElementById("out").className = "";
+      document.getElementById("out").innerHTML = "SHIPPED. That is the game.";
+    } else {
+      document.getElementById("out").className = "bad";
+      document.getElementById("out").innerHTML = "Ran. Logged: " + (logs.join(", ") || "nothing") + " — need exactly CODE STACKS";
+    }
+  } catch (e) {
+    document.getElementById("out").className = "bad";
+    document.getElementById("out").innerHTML = "Error: " + e.message;
+  }
+}
+</script>
 </body>
 </html>
