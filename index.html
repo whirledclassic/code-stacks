@@ -25,14 +25,14 @@
           <h1>CODE<br /><span>STACKS</span></h1>
           <p class="tag">Turn-based programming. One line. Next player. Keep the repo alive until it ships.</p>
           <div class="hero-actions">
-            <span class="pill">v1.7.0 · JS · solo</span>
+            <span class="pill">v1.9.2 · music · docs</span>
             <button class="btn ghost" id="btn-how" type="button">How it works</button>
           </div>
         </div>
       </div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Pass-and-play with friends, or hit Practice solo to test a mission alone.</p>
+        <p class="lead">Music starts on your first click. Full rules live in DOCS.md in this folder.</p>
         <div class="langlock"><span>Language this version</span><b>JavaScript</b></div>
         <div class="field">
           <label>Stackers</label>
@@ -61,7 +61,6 @@
           <img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">
           <div class="wordmark">CODE <span>STACKS</span></div>
           <span id="mission-pill" class="pill"></span>
-          <span id="lang-pill" class="pill">JS</span>
           <span id="stack-pill" class="pill">0 lines</span>
         </div>
         <div class="right">
@@ -77,7 +76,7 @@
           <pre id="source-view" class="source-view">// empty</pre>
           <div class="editor-wrap">
             <div class="who"><div><div id="phase-tag" class="phase-tag play">STACK A LINE</div><div id="who-name" class="name">—</div></div><div id="who-fail" class="fail"></div></div>
-            <textarea id="line-input" class="editor" rows="2" maxlength="240" placeholder="one line of JavaScript"></textarea>
+            <textarea id="line-input" class="editor" rows="2" maxlength="320" placeholder="one line of JavaScript"></textarea>
             <div class="actions">
               <button class="btn primary" id="btn-stack" type="button" style="width:auto;margin:0">Stack line</button>
               <button class="btn ghost" id="btn-hint" type="button">Peek hint</button>
@@ -89,20 +88,20 @@
           <h3>Mission spec</h3><div id="spec" class="spec"></div>
           <h3 id="checks-head">Spec tests</h3><div id="checks" class="checks"></div>
           <h3>Stackers</h3><div id="players" class="players"></div>
-          <h3>Log</h3><div id="feed" class="feed"></div>
         </aside>
       </div>
     </section>
   </div>
   <div id="handoff" class="overlay hidden"><div class="card"><div id="handoff-name" class="big">Player</div><button class="btn primary" id="btn-begin" type="button">This is me — start turn</button></div></div>
-  <div id="end" class="overlay hidden"><div class="card end-card"><img id="end-art" class="end-art" src="assets/win.jpg" alt="" onerror="this.style.display='none'"><h2 id="end-title">REPO SHIPS</h2><p id="end-body"></p><div class="actions-end"><button class="btn primary" id="btn-download" type="button">Download repo.zip</button><button class="btn ghost" id="btn-replay" type="button">Replay</button><button class="btn ghost" id="btn-again" type="button">Menu</button></div></div></div>
-  <div id="how" class="overlay hidden"><div class="card"><h2>How it works</h2><ol class="how-list"><li>One line per turn.</li><li>File must still run.</li><li>Errors keep you on the same turn.</li><li>Solo mode skips passing the keyboard.</li></ol><button class="btn primary" id="btn-how-close" type="button">Got it</button></div></div>
+  <div id="end" class="overlay hidden"><div class="card end-card"><img id="end-art" class="end-art" src="assets/win.jpg" alt="" onerror="this.style.display='none'"><h2 id="end-title">REPO SHIPS</h2><p id="end-body"></p><button class="btn primary" id="btn-download" type="button">Download</button><button class="btn ghost" id="btn-replay" type="button">Replay</button><button class="btn ghost" id="btn-again" type="button">Menu</button></div></div>
+  <div id="how" class="overlay hidden"><div class="card"><h2>How it works</h2><ol class="how-list"><li>One line per turn.</li><li>File must still run.</li><li>Errors keep you on the same turn.</li><li>Mute stops music and SFX.</li></ol><button class="btn primary" id="btn-how-close" type="button">Got it</button></div></div>
   <div id="toast" class="toast hidden"></div>
   <script src="js/compat.js"></script>
   <script src="js/updater.js"></script>
   <script src="js/missions.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/fx.js"></script>
   <script src="js/game.js"></script>
   <script src="js/ui.js"></script>
