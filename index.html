@@ -15,18 +15,18 @@
     #news-list, #trophy-list { max-height: 360px; overflow-y: auto; margin: 12px 0 16px; padding-right: 8px; }
     .news-item { border-bottom: 1px solid #243044; padding: 10px 0; }
     .news-item strong { color: #3de0ff; margin-right: 8px; }
-    .news-item em { color: #8b97ab; font-style: normal; font-size: 12px; }
     .news-item p { margin: 6px 0 0; color: #c5d4e7; font-size: 14px; }
+    #console-logs { margin-top: 8px; color: #7cff6b; font-family: Consolas, Courier New, monospace; white-space: pre-wrap; }
   </style>
 </head>
 <body>
   <div id="boot"><div class="logo-stack"><i></i><i></i><i></i></div><div class="boot-name">CODE STACKER</div><div class="boot-bar"><b></b></div></div>
   <div class="app">
     <section id="splash" class="splash">
-      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">JavaScript and Tiny. One line. Then vote export or destroy.</p><div class="hero-actions"><span class="pill">v1.28.0</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button><button class="btn ghost" id="btn-news" type="button">Updates</button></div></div></div>
+      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">JavaScript and Tiny. One line. Then vote export or destroy.</p><div class="hero-actions"><span class="pill">v1.28.2</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button><button class="btn ghost" id="btn-news" type="button">Updates</button></div></div></div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Local trophies and ship stats live on this machine. Open Trophies on the splash.</p>
+        <p class="lead">Watch print and console.log land under the table console.</p>
         <div class="field"><label>Stackers</label><div class="row"><input id="new-name" type="text" maxlength="18" placeholder="Name, then enter" /><button class="btn ghost" id="add-player" type="button">Add</button></div><div id="player-chips" class="chips" style="margin-top:10px"></div></div>
         <div class="field"><label>Mission</label><div id="missions" class="missions"></div></div>
         <div class="opts"><div class="field"><label>Seconds per turn</label><input id="turn-sec" type="number" min="15" max="120" value="45" /></div><div class="field"><label>Fails before you're out</label><input id="fails-out" type="number" min="2" max="6" value="3" /></div></div>
@@ -67,5 +67,6 @@
   <script src="js/ui.js"></script>
   <script src="js/qol.js"></script>
   <script src="js/news.js"></script>
+  <script src="js/immerse.js"></script>
   <script>setTimeout(function(){var b=document.getElementById("boot");if(!b)return;if(window.Settings&&Settings.load().skipBoot){if(b.parentNode)b.parentNode.removeChild(b);return;}b.className="off";setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},600);},1800);</script>
 </body></html>
