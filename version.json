@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "released": "2026-09-15",
-  "notes": "Settings page: audio, match defaults, contrast, large text, reduce motion."
+  "notes": "Functionality patch: settings mute works, Ledger mission, export chips paint."
 }
