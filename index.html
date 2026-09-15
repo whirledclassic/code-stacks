@@ -15,10 +15,10 @@
   <div id="boot"><div class="logo-stack"><i></i><i></i><i></i></div><div class="boot-name">CODE STACKER</div><div class="boot-bar"><b></b></div></div>
   <div class="app">
     <section id="splash" class="splash">
-      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">One line. Keep the repo alive. Then vote: export or destroy.</p><div class="hero-actions"><span class="pill">v1.24.1</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button></div></div></div>
+      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">One line. Keep the repo alive. Then vote: export or destroy.</p><div class="hero-actions"><span class="pill">v1.25.1</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button></div></div></div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Ship the spec, then the table votes to export the file or burn it.</p>
+        <p class="lead">Ship the spec, then the table votes to export the file or burn it. Esc closes Settings.</p>
         <div class="field"><label>Stackers</label><div class="row"><input id="new-name" type="text" maxlength="18" placeholder="Name, then enter" /><button class="btn ghost" id="add-player" type="button">Add</button></div><div id="player-chips" class="chips" style="margin-top:10px"></div></div>
         <div class="field"><label>Mission</label><div id="missions" class="missions"></div></div>
         <div class="opts"><div class="field"><label>Seconds per turn</label><input id="turn-sec" type="number" min="15" max="120" value="45" /></div><div class="field"><label>Fails before you're out</label><input id="fails-out" type="number" min="2" max="6" value="3" /></div></div>
@@ -53,5 +53,6 @@
   <script src="js/core-patch.js"></script>
   <script src="js/vote.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/qol.js"></script>
   <script>setTimeout(function(){var b=document.getElementById("boot");if(!b)return;if(window.Settings&&Settings.load().skipBoot){if(b.parentNode)b.parentNode.removeChild(b);return;}b.className="off";setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},600);},1800);</script>
 </body></html>
