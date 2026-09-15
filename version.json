@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "released": "2026-09-15",
-  "notes": "Engine v2 with exports, 1200ms budget, Toolbox project mission."
+  "notes": "Live pending preview, next-test target, snippet chips for adding lines."
 }
