@@ -1,13 +1,13 @@
 window.CS_NEWS = [
-  { v: "1.27.1", date: "2026-09-15", text: "Esc closes Updates. Tiny Blood is a second language: print CODE STACKS." },
-  { v: "1.27.0", date: "2026-09-15", text: "Tiny language runner. Mission Tiny Blood. runScript honors mission.language." },
-  { v: "1.26.0", date: "2026-09-15", text: "In-game Updates panel on the menu. Scroll for older patches." },
-  { v: "1.25.2", date: "2026-09-15", text: "Stars count on the export/destroy vote so the next mission unlocks." },
-  { v: "1.25.1", date: "2026-09-15", text: "Esc closes Settings. Last mission id is remembered." },
-  { v: "1.24.0", date: "2026-09-15", text: "After a ship, vote Export or Destroy." },
-  { v: "1.16.0", date: "2026-09-15", text: "INSTALL / PLAY / UPDATE. Win7 zip download." },
-  { v: "1.14.0", date: "2026-09-15", text: "Settings: audio, contrast, large text, reduce motion." },
-  { v: "1.0", date: "2026-09-15", text: "First Blood. One line. Keep the repo alive." }
+  { v: "1.32.1", date: "2026-09-15", text: "INSTALL.bat plays from this folder when index.html is already here." },
+  { v: "1.32.0", date: "2026-09-15", text: "START-HERE.md. Two clicks: INSTALL then ONECLICK." },
+  { v: "1.31.0", date: "2026-09-15", text: "CodeStacksSetup.exe WinForms installer. BUILD-INSTALLER.bat." },
+  { v: "1.30.0", date: "2026-09-15", text: "Installer wizard UI." },
+  { v: "1.29.0", date: "2026-09-15", text: "CodeStacks.exe starts PLAY.bat from the game folder." },
+  { v: "1.28.0", date: "2026-09-15", text: "Local trophies and ship stats." },
+  { v: "1.27.0", date: "2026-09-15", text: "Tiny language. print CODE STACKS." },
+  { v: "1.24.0", date: "2026-09-15", text: "Vote export or destroy after a ship." },
+  { v: "1.0", date: "2026-09-15", text: "First Blood. One line." }
 ];
 (function () {
   function boot() {

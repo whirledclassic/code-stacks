@@ -1,20 +1,24 @@
 # CODE STACKS
-### Code Stacker
 
-Turn-based programming. One line of JavaScript. The file must still run. Spec green, then vote export or destroy.
+Turn-based coding. One line per turn. File must keep running. Spec green → vote export or destroy.
 
-[OVERVIEW.md](OVERVIEW.md) · [DOCS.md](DOCS.md) · [DEVELOPMENT.md](DEVELOPMENT.md) · [COMPAT.md](COMPAT.md)
+**Read [START-HERE.md](START-HERE.md) first.**
+
+## Install / play (Windows 7+)
+
+Already have this folder?
+
+    INSTALL.bat
+
+That shortcut + play. Later: Desktop **CODE STACKS** or `ONECLICK.bat`.
+
+Empty PC: same `INSTALL.bat` downloads into `%USERPROFILE%\code-stacks`.
+
+Not IE. Chrome 109 or Firefox on Win7.
+
+## Prove it
+
+Practice solo → First Blood → `console.log("CODE STACKS");`  
+Tiny Blood → `print CODE STACKS`
 
 https://github.com/whirledclassic/code-stacks
-
-## Play
-
-    cd %USERPROFILE%\\code-stacks
-    git pull origin main
-    SETUP.bat
-
-Or PLAY.bat. Client: http://127.0.0.1:8765/client.html
-
-## Prove-it
-
-Practice solo → First Blood → `console.log("CODE STACKS");` → Export or Destroy.
