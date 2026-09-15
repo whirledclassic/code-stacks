@@ -1,4 +1,4 @@
-window.CS_VERSION = "1.31.1";
+window.CS_VERSION = "1.32.2";
 window.Updater = (function () {
   var REMOTE = "https://raw.githubusercontent.com/whirledclassic/code-stacks/main/version.json?t=" + Date.now();
   function cmp(a, b) {
