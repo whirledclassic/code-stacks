@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "released": "2026-09-15",
-  "notes": "Win/lose overlay and fanfare fire once, not every 250ms."
+  "notes": "Engine v3: console + exports + stack, export key list, stack-line errors."
 }
