@@ -19,6 +19,7 @@ window.Game = (function () {
       turnDeadline: Date.now() + (opts.turnSeconds || 45) * 1000, turnSeconds: opts.turnSeconds || 45,
       failsToOut: opts.failsToOut || 3, draft: "", lastResult: null, checkResults: emptyChecks(mission),
       hintUsed: false, justEliminated: false, busy: false, combo: 0,
+      vote: { export: 0, destroy: 0 },
       log: [{ t: Date.now(), kind: "sys", text: "Repo opened." }],
       startedAt: Date.now(), winnerNote: ""
     };
@@ -58,10 +59,31 @@ window.Game = (function () {
     state.turnDeadline = Date.now() + state.turnSeconds * 1000;
     state.phase = a.length === 1 ? "play" : "handoff";
   }
+  function castVote(state, choice) {
+    if (state.phase !== "vote") return { done: false };
+    choice = choice === "destroy" ? "destroy" : "export";
+    state.vote = state.vote || { export: 0, destroy: 0 };
+    state.vote[choice] += 1;
+    var need = Math.max(1, alive(state).length);
+    var total = state.vote.export + state.vote.destroy;
+    if (total < need && need > 1) {
+      return { done: false, export: state.vote.export, destroy: state.vote.destroy, need: need };
+    }
+    if (state.vote.destroy > state.vote.export) {
+      state.lines = [];
+      state.lastGood = [];
+      state.phase = "lose";
+      state.winnerNote = "The table voted to destroy the repo.";
+      return { done: true, result: "destroy" };
+    }
+    state.phase = "win";
+    state.winnerNote = "The table voted to export the repo.";
+    return { done: true, result: "export" };
+  }
   function submitLine(state, raw) {
     if (state.phase === "handoff" && alive(state).length === 1) startTurn(state);
     var player = current(state);
-    if (!player || state.busy || state.phase === "win" || state.phase === "lose" || state.phase === "handoff") {
+    if (!player || state.busy || state.phase === "win" || state.phase === "lose" || state.phase === "handoff" || state.phase === "vote") {
       return Promise.resolve({ ok: false, message: "Not accepting a line right now." });
     }
     var text = String(raw || "").replace(/[\r\n]+/g, "").replace(/\s+$/, "");
@@ -79,12 +101,14 @@ window.Game = (function () {
       }
       state.lines = trial; state.lastGood = trial.slice(); state.pending = null;
       player.lines += 1; player.fails = 0; player.streak = (player.streak || 0) + 1; state.combo = player.streak; state.draft = "";
+      if (result.exportsKeys) state.exportKeys = result.exportsKeys;
       if (player.streak >= 3) state.turnDeadline += 4000;
-      return Engine.runTests(code, state.mission.checks || []).then(function (tests) {
+      return Engine.runTests(code, state.mission.checks || [], (state.mission && state.mission.language) || "javascript").then(function (tests) {
         if (tests.checks && tests.checks.length) state.checkResults = tests.checks;
         if (tests.passed) {
-          state.phase = "win";
-          state.winnerNote = "Repo ships." + (window.Progress ? " Stars: " + Progress.starsFor(state) : "");
+          state.phase = "vote";
+          state.vote = { export: 0, destroy: 0 };
+          state.winnerNote = "Repo is green. Export it or destroy it.";
           if (window.Progress) Progress.recordShip(state);
           return { ok: true, won: true, result: result };
         }
@@ -94,7 +118,7 @@ window.Game = (function () {
     });
   }
   function tick(state) {
-    if (state.busy || state.phase === "win" || state.phase === "lose" || state.phase === "handoff") return state;
+    if (state.busy || state.phase === "win" || state.phase === "lose" || state.phase === "handoff" || state.phase === "vote") return state;
     if (state.turnDeadline - Date.now() <= 0) {
       var p = current(state);
       if (p) eliminate(state, p, "clock ran out");
@@ -110,5 +134,5 @@ window.Game = (function () {
     var code = source(state) || "// empty stack";
     return { file: state.mission.file, code: code + "\n", readme: "# " + state.mission.title + "\n", zip: null };
   }
-  return { create: create, current: current, alive: alive, source: source, submitLine: submitLine, tick: tick, startTurn: startTurn, exportRepo: exportRepo, useHint: useHint };
+  return { create: create, current: current, alive: alive, source: source, submitLine: submitLine, tick: tick, startTurn: startTurn, exportRepo: exportRepo, useHint: useHint, castVote: castVote };
 })();
