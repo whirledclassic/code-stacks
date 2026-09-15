@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.28.3",
+  "version": "1.29.0",
   "released": "2026-09-15",
-  "notes": "First click/key unlocks audio. Launcher.cs + BUILD-CLIENT.bat on GitHub."
+  "notes": "CodeStacks.exe now starts PLAY.bat from the game folder."
 }
