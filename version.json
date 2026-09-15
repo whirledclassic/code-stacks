@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "released": "2026-09-15",
-  "notes": "Win7+ compatibility docs. Client frame min-height for old Chrome."
+  "notes": "SETUP.bat / GET-CLIENT.bat: shortcut, exe, play."
 }
