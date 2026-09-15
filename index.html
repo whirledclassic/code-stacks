@@ -8,6 +8,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/art.css" />
+  <link rel="stylesheet" href="css/beauty.css" />
 </head>
 <body>
   <div class="noise"></div>
@@ -23,22 +24,15 @@
           <div class="brand"><img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">CODE STACKER</div>
           <h1>CODE<br /><span>STACKS</span></h1>
           <p class="tag">Turn-based programming. One line. Next player. Keep the repo alive until it ships.</p>
-          <div class="rules">
-            <div class="rule"><span class="num">01</span><span>On your turn you write exactly one line of JavaScript.</span></div>
-            <div class="rule"><span class="num">02</span><span>The whole file is run before the turn passes. If it executes, the line locks and the next stacker is up.</span></div>
-            <div class="rule"><span class="num">03</span><span>If it errors, you stay. Fix that line. Keep failing or burn the clock and you are out.</span></div>
-            <div class="rule"><span class="num">04</span><span>Keep stacking until the mission tests go green.</span></div>
-          </div>
           <div class="hero-actions">
-            <span class="pill">v1.6.0 · JS · Win7</span>
+            <span class="pill">v1.7.0 · JS · solo</span>
             <button class="btn ghost" id="btn-how" type="button">How it works</button>
-            <button class="btn ghost" id="btn-update" type="button" onclick="alert('Close the browser and double-click update.bat');">Update</button>
           </div>
         </div>
       </div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Add players or stack solo. Run update.bat to patch an older copy.</p>
+        <p class="lead">Pass-and-play with friends, or hit Practice solo to test a mission alone.</p>
         <div class="langlock"><span>Language this version</span><b>JavaScript</b></div>
         <div class="field">
           <label>Stackers</label>
@@ -57,12 +51,14 @@
           <div class="field"><label>Fails before you're out</label><input id="fails-out" type="number" min="2" max="6" value="3" /></div>
         </div>
         <button class="btn primary" id="btn-start" type="button">Start stacking</button>
+        <button class="btn solo" id="btn-solo" type="button">Practice solo</button>
+        <p class="practice-note">Solo skips the handoff screen so you can test alone.</p>
       </div>
     </section>
     <section id="game" class="hidden" style="display:flex;flex-direction:column;min-height:100vh">
       <header class="topbar">
         <div class="left">
-          <img class="brand-mark nav-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">
+          <img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">
           <div class="wordmark">CODE <span>STACKS</span></div>
           <span id="mission-pill" class="pill"></span>
           <span id="lang-pill" class="pill">JS</span>
@@ -70,7 +66,6 @@
         </div>
         <div class="right">
           <div id="timer" class="timer">0:45</div>
-          <label class="vol-wrap"><input id="vol" type="range" min="0" max="1" step="0.05" value="0.7" /></label>
           <button class="btn ghost" id="btn-mute" type="button">Sound on</button>
           <button class="btn ghost" id="btn-quit" type="button">Quit</button>
         </div>
@@ -82,11 +77,10 @@
           <pre id="source-view" class="source-view">// empty</pre>
           <div class="editor-wrap">
             <div class="who"><div><div id="phase-tag" class="phase-tag play">STACK A LINE</div><div id="who-name" class="name">—</div></div><div id="who-fail" class="fail"></div></div>
-            <textarea id="line-input" class="editor" rows="2" maxlength="240" placeholder="one line of JavaScript — Enter to stack"></textarea>
+            <textarea id="line-input" class="editor" rows="2" maxlength="240" placeholder="one line of JavaScript"></textarea>
             <div class="actions">
               <button class="btn primary" id="btn-stack" type="button" style="width:auto;margin:0">Stack line</button>
               <button class="btn ghost" id="btn-hint" type="button">Peek hint</button>
-              <span id="char-count" class="hint">0 / 240</span>
             </div>
           </div>
           <div id="console" class="console"></div>
@@ -100,41 +94,9 @@
       </div>
     </section>
   </div>
-  <div id="handoff" class="overlay hidden">
-    <div class="card">
-      <div class="brand" style="justify-content:center;margin-bottom:16px"><img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">NEXT STACKER</div>
-      <div id="handoff-name" class="big">Player</div>
-      <p id="handoff-sub">Pass the keyboard.</p>
-      <button class="btn primary" id="btn-begin" type="button">This is me — start turn</button>
-    </div>
-  </div>
-  <div id="end" class="overlay hidden">
-    <div class="card end-card">
-      <img id="end-art" class="end-art" src="assets/win.jpg" alt="" onerror="this.style.display='none'">
-      <h2 id="end-title">REPO SHIPS</h2>
-      <p id="end-body"></p>
-      <div class="actions-end" style="margin-top:18px">
-        <button class="btn primary" id="btn-download" type="button" style="width:auto;margin:0">Download repo.zip</button>
-        <button class="btn ghost" id="btn-replay" type="button">Replay mission</button>
-        <button class="btn ghost" id="btn-again" type="button">Back to menu</button>
-      </div>
-    </div>
-  </div>
-  <div id="how" class="overlay hidden">
-    <div class="card" style="text-align:left">
-      <h2 style="text-align:center">How Code Stacker works</h2>
-      <ol class="how-list">
-        <li>Players take turns at one keyboard.</li>
-        <li>Your turn: write exactly one line of JavaScript.</li>
-        <li>The whole file is executed before the turn passes.</li>
-        <li>If it runs, the line locks. Next player.</li>
-        <li>If it errors, you stay and fix that same line.</li>
-        <li>Three failed runs or the timer hitting zero and you are out.</li>
-        <li>When spec tests go green, you shipped.</li>
-      </ol>
-      <button class="btn primary" id="btn-how-close" type="button">Got it</button>
-    </div>
-  </div>
+  <div id="handoff" class="overlay hidden"><div class="card"><div id="handoff-name" class="big">Player</div><button class="btn primary" id="btn-begin" type="button">This is me — start turn</button></div></div>
+  <div id="end" class="overlay hidden"><div class="card end-card"><img id="end-art" class="end-art" src="assets/win.jpg" alt="" onerror="this.style.display='none'"><h2 id="end-title">REPO SHIPS</h2><p id="end-body"></p><div class="actions-end"><button class="btn primary" id="btn-download" type="button">Download repo.zip</button><button class="btn ghost" id="btn-replay" type="button">Replay</button><button class="btn ghost" id="btn-again" type="button">Menu</button></div></div></div>
+  <div id="how" class="overlay hidden"><div class="card"><h2>How it works</h2><ol class="how-list"><li>One line per turn.</li><li>File must still run.</li><li>Errors keep you on the same turn.</li><li>Solo mode skips passing the keyboard.</li></ol><button class="btn primary" id="btn-how-close" type="button">Got it</button></div></div>
   <div id="toast" class="toast hidden"></div>
   <script src="js/compat.js"></script>
   <script src="js/updater.js"></script>
