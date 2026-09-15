@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "released": "2026-09-15",
-  "notes": "CodeStacks.exe launcher (build with BUILD-CLIENT.bat) + app-window client."
+  "notes": "Branded installer/updater desks, new slab icon and workshop hero."
 }
