@@ -7,6 +7,7 @@
   <title>CODE STACKS — Code Stacker</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/art.css" />
 </head>
 <body>
   <div class="noise"></div>
@@ -14,8 +15,12 @@
   <div class="app">
     <section id="splash" class="splash">
       <div class="hero">
+        <div class="hero-art">
+          <img src="assets/hero.jpg" alt="" onerror="this.style.display='none'">
+          <div class="hero-fade"></div>
+        </div>
         <div class="hero-copy">
-          <div class="brand">CODE STACKER</div>
+          <div class="brand"><img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">CODE STACKER</div>
           <h1>CODE<br /><span>STACKS</span></h1>
           <p class="tag">Turn-based programming. One line. Next player. Keep the repo alive until it ships.</p>
           <div class="rules">
@@ -25,15 +30,15 @@
             <div class="rule"><span class="num">04</span><span>Keep stacking until the mission tests go green.</span></div>
           </div>
           <div class="hero-actions">
-            <span class="pill">v1.5.0 · JS · Win7</span>
+            <span class="pill">v1.6.0 · JS · Win7</span>
             <button class="btn ghost" id="btn-how" type="button">How it works</button>
-            <button class="btn ghost" id="btn-update" type="button" onclick="alert('Close the browser and double-click update.bat in the code-stacks folder.');">Update</button>
+            <button class="btn ghost" id="btn-update" type="button" onclick="alert('Close the browser and double-click update.bat');">Update</button>
           </div>
         </div>
       </div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Add players or stack solo. On Windows 7 use Chrome 109 or Firefox 115 ESR. To patch an old copy, close this tab and run update.bat.</p>
+        <p class="lead">Add players or stack solo. Run update.bat to patch an older copy.</p>
         <div class="langlock"><span>Language this version</span><b>JavaScript</b></div>
         <div class="field">
           <label>Stackers</label>
@@ -57,6 +62,7 @@
     <section id="game" class="hidden" style="display:flex;flex-direction:column;min-height:100vh">
       <header class="topbar">
         <div class="left">
+          <img class="brand-mark nav-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">
           <div class="wordmark">CODE <span>STACKS</span></div>
           <span id="mission-pill" class="pill"></span>
           <span id="lang-pill" class="pill">JS</span>
@@ -64,7 +70,7 @@
         </div>
         <div class="right">
           <div id="timer" class="timer">0:45</div>
-          <label class="vol-wrap" title="Volume"><input id="vol" type="range" min="0" max="1" step="0.05" value="0.7" /></label>
+          <label class="vol-wrap"><input id="vol" type="range" min="0" max="1" step="0.05" value="0.7" /></label>
           <button class="btn ghost" id="btn-mute" type="button">Sound on</button>
           <button class="btn ghost" id="btn-quit" type="button">Quit</button>
         </div>
@@ -96,15 +102,15 @@
   </div>
   <div id="handoff" class="overlay hidden">
     <div class="card">
-      <div class="brand" style="justify-content:center;margin-bottom:16px">NEXT STACKER</div>
+      <div class="brand" style="justify-content:center;margin-bottom:16px"><img class="brand-mark" src="assets/logo.jpg" alt="" onerror="this.style.display='none'">NEXT STACKER</div>
       <div id="handoff-name" class="big">Player</div>
       <p id="handoff-sub">Pass the keyboard.</p>
-      <p class="hint" style="display:block;margin:0 0 14px;text-align:center">Space also starts the turn</p>
       <button class="btn primary" id="btn-begin" type="button">This is me — start turn</button>
     </div>
   </div>
   <div id="end" class="overlay hidden">
     <div class="card end-card">
+      <img id="end-art" class="end-art" src="assets/win.jpg" alt="" onerror="this.style.display='none'">
       <h2 id="end-title">REPO SHIPS</h2>
       <p id="end-body"></p>
       <div class="actions-end" style="margin-top:18px">
