@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.25.1",
+  "version": "1.25.2",
   "released": "2026-09-15",
-  "notes": "QoL: Esc closes Settings/How. Last mission id saved."
+  "notes": "Fix: stars/unlocks on vote phase. Esc no longer clobbers other key handlers."
 }
