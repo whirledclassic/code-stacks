@@ -11,5 +11,9 @@ if "%CSC%"=="" (
   goto eof
 )
 "%CSC%" /nologo /target:winexe /r:System.Windows.Forms.dll /out:CodeStacks.exe client\Launcher.cs
-if exist CodeStacks.exe echo Built CodeStacks.exe
+if exist CodeStacks.exe (
+  echo Built CodeStacks.exe
+) else (
+  echo Build failed. Use PLAY.bat.
+)
 pause

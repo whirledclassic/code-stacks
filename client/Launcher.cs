@@ -9,18 +9,18 @@ namespace CodeStacks {
     static string Root() { return AppDomain.CurrentDomain.BaseDirectory; }
     static string FindPython() {
       string[] names = { "py", "python", "python3" };
-      for (int i = 0; i < names.Length; i++) {
+      for (int n = 0; n < names.Length; n++) {
         try {
-          ProcessStartInfo inf = new ProcessStartInfo();
-          inf.FileName = names[i];
-          inf.Arguments = "--version";
-          inf.UseShellExecute = false;
-          inf.RedirectStandardOutput = true;
-          inf.RedirectStandardError = true;
-          inf.CreateNoWindow = true;
-          Process p = Process.Start(inf);
+          ProcessStartInfo i = new ProcessStartInfo();
+          i.FileName = names[n];
+          i.Arguments = "--version";
+          i.UseShellExecute = false;
+          i.RedirectStandardOutput = true;
+          i.RedirectStandardError = true;
+          i.CreateNoWindow = true;
+          Process p = Process.Start(i);
           p.WaitForExit(4000);
-          return names[i];
+          if (p.ExitCode != 9009) return names[n];
         } catch {}
       }
       return null;
@@ -51,7 +51,7 @@ namespace CodeStacks {
           i.UseShellExecute = false;
           i.CreateNoWindow = true;
           server = Process.Start(i);
-          Thread.Sleep(700);
+          Thread.Sleep(900);
         } catch { server = null; }
       }
       if (server == null) url = Path.Combine(root, "client.html");
@@ -64,13 +64,15 @@ namespace CodeStacks {
             b.Arguments = "--app=" + url + " --window-size=1280,800";
           else b.Arguments = url;
           Process.Start(b);
-        } else Process.Start(url);
+        } else {
+          Process.Start(url);
+        }
       } catch {
         MessageBox.Show("Could not open the client. Run PLAY.bat instead.", "CODE STACKS");
         return;
       }
       if (server != null) {
-        MessageBox.Show("CODE STACKS client is running.\nClick OK to stop the table.", "CODE STACKS");
+        MessageBox.Show("CODE STACKS is running.\nLeave this dialog open.\nClick OK to stop the table.", "CODE STACKS");
         try { server.Kill(); } catch {}
       }
     }
