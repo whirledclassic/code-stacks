@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.29.1",
+  "version": "1.29.2",
   "released": "2026-09-15",
-  "notes": "ONECLICK.bat: shortcut + exe + play."
+  "notes": "Install docs. INSTALL.bat should finish with ONECLICK when present."
 }

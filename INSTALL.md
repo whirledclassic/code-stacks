@@ -1,9 +1,22 @@
-# One-click install (Windows)
+# Install (Windows 7 SP1 and newer)
 
-1. Double-click INSTALL.bat
-2. Game lands in %USERPROFILE%\\code-stacks
-3. Desktop shortcut CODE STACKS runs PLAY.bat
-4. Later: UPDATE.bat
+Need: Chrome 109 or Firefox 115 ESR (Win7) / current Chrome (Win10+). Python 3 on PATH helps. Git optional.
+Not Internet Explorer.
 
-PLAY.bat starts python -m http.server 8765 and opens client.html.
-Win7 uses cscript + certutil if git / powershell unzip is missing.
+## Already have the folder
+
+    cd %USERPROFILE%\code-stacks
+    git pull origin main
+    ONECLICK.bat
+
+## First machine
+
+    INSTALL.bat
+
+INSTALL clones or zips into %%USERPROFILE%%\code-stacks (git if present, else certutil zip), writes a Desktop shortcut, then starts ONECLICK/PLAY.
+
+## Checks if it failed
+
+- python / py -3 on PATH — otherwise PLAY opens files and the sandbox is weaker
+- index.html exists in the folder you launched from
+- Chrome/Firefox, not iexplore
