@@ -1,0 +1,9 @@
+body{background:radial-gradient(900px 500px at 10% -10%,#ff3d9a33,transparent 55%),radial-gradient(800px 480px at 110% 0%,#3de0ff33,transparent 50%),radial-gradient(700px 400px at 50% 110%,#7cff6b22,transparent 55%),#07080d;}
+.hero h1 span{background:linear-gradient(90deg,#3de0ff,#7cff6b,#ffb020,#ff3d9a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px #3de0ff66);}
+.btn.primary{background:linear-gradient(90deg,#3de0ff,#7cff6b);color:#041016;box-shadow:0 0 0 1px #3de0ff55,0 10px 30px #3de0ff33;}
+.btn.solo{width:100%;margin-top:8px;background:linear-gradient(90deg,#ff3d9a,#ffb020);color:#14040c;border:0;border-radius:10px;padding:12px 16px;font-weight:700;}
+.practice-note{font-size:12px;color:#ffb020;margin:8px 0 0;letter-spacing:.08em;text-transform:uppercase;}
+.mission.on{border-color:#7cff6b88;box-shadow:0 0 0 1px #7cff6b33;}
+.timer{text-shadow:0 0 16px #3de0ff55;}
+.card{box-shadow:0 0 0 1px #3de0ff33,0 24px 60px #000a;}
+#game.solo-mode .topbar{box-shadow:inset 0 -1px 0 #ff3d9a44;}
