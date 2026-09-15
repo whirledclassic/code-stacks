@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "released": "2026-09-15",
-  "notes": "Music tightens on low clock / combo; lock, combo, ship SFX."
+  "notes": "Live exports bag, combo glow, smoother ship meter."
 }

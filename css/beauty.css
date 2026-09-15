@@ -1,4 +1,3 @@
-/* Visual layer */
 body { background: radial-gradient(900px 520px at 8% -8%, rgba(255,61,154,.28), transparent 55%), radial-gradient(820px 480px at 108% 0%, rgba(61,224,255,.26), transparent 52%), #07080d; }
 .hero h1 span { background: linear-gradient(90deg, #3de0ff, #7cff6b 42%, #ffb020 72%, #ff3d9a); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .btn.primary { background: linear-gradient(90deg, #3de0ff, #7cff6b); color: #041016; }
@@ -7,8 +6,11 @@ body { background: radial-gradient(900px 520px at 8% -8%, rgba(255,61,154,.28), 
 .mission.locked { opacity: .4; }
 .sline { background: linear-gradient(90deg, rgba(61,224,255,.08), rgba(12,16,24,.92)); }
 .ship-meter { margin: 10px 12px 0; height: 18px; background: #0a0d14; border: 1px solid #243044; border-radius: 99px; position: relative; overflow: hidden; }
-.ship-meter b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #3de0ff, #7cff6b); }
+.ship-meter b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #3de0ff, #7cff6b); transition: width .25s linear; }
 .ship-meter span { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 10px; line-height: 18px; color: #e7edf7; }
 .ship-meter.hot b { background: linear-gradient(90deg, #ffb020, #7cff6b); }
 .ship-meter.done b { background: #7cff6b; }
-.pill.combo { color: #ffb020; }
+.pill.combo { color: #8b97ab; }
+.pill.combo.on { color: #ffb020; box-shadow: 0 0 12px rgba(255,176,32,.45); }
+.exports-bag { margin: 8px 12px 0; font-size: 12px; color: #7cff6b; font-family: Consolas, Courier New, monospace; }
+.exports-bag span { display: inline-block; margin: 0 6px 6px 0; border: 1px solid #2a4a38; padding: 2px 8px; border-radius: 999px; background: #0c1512; }
