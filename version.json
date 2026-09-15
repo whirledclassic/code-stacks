@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "released": "2026-09-15",
-  "notes": "Feature overhaul: combo/meter/unlocks actually painted; draft restore; locked missions."
+  "notes": "Win/lose overlay and fanfare fire once, not every 250ms."
 }
