@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.28.1",
+  "version": "1.28.2",
   "released": "2026-09-15",
-  "notes": "Destroy vote no longer records 0 lines. Snapshot before wipe."
+  "notes": "Live print/console output under the table console. Mission pill shows language."
 }
