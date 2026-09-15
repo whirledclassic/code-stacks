@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "released": "2026-09-15",
-  "notes": "SETUP.bat / GET-CLIENT.bat: shortcut, exe, play."
+  "notes": "Animated stack lines, combo pulse, low-clock timer. Reduce-motion still wins."
 }

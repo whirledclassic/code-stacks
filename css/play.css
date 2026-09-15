@@ -1,0 +1,7 @@
+@keyframes cs-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes cs-pulse { 0%,100% { box-shadow: 0 0 0 rgba(255,176,32,0); } 50% { box-shadow: 0 0 16px rgba(255,176,32,.55); } }
+.sline { animation: cs-in .28s ease-out; }
+.check.pass { animation: cs-in .2s ease-out; }
+.pill.combo.on { animation: cs-pulse 1s ease-in-out infinite; }
+.timer.low { color: #ffb020; animation: cs-pulse .8s ease-in-out infinite; }
+.a11y-motion * { animation: none !important; }
