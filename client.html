@@ -1,33 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>CODE STACKS Client</title>
-  <link rel="stylesheet" href="css/client.css" />
+<meta charset="UTF-8" />
+<title>CODE STACKS</title>
+<script>
+window.location.replace("play.html");
+</script>
 </head>
-<body class="client-shell">
-  <div class="client-bar">
-    <span class="brand"><img src="assets/brand/icon.jpg" alt="" onerror="this.src='assets/icon.jpg'"/>CODE STACKS · client</span>
-    <span class="acts">
-      <button type="button" id="btn-reload">Reload</button>
-      <button type="button" id="btn-full">Full window</button>
-      <button type="button" id="btn-tab">Table tab</button>
-    </span>
-  </div>
-  <iframe id="frame" class="client-frame" src="index.html" title="Code Stacks table" allow="autoplay"></iframe>
-  <div class="client-note">Installer: INSTALL.bat or SETUP.bat. Leave PLAY.bat / CodeStacks.exe running.</div>
-  <script>
-    (function () {
-      var frame = document.getElementById("frame");
-      document.getElementById("btn-reload").onclick = function () { frame.src = "index.html?t=" + Date.now(); };
-      document.getElementById("btn-tab").onclick = function () { window.location.href = "index.html"; };
-      document.getElementById("btn-full").onclick = function () {
-        var el = document.documentElement;
-        if (el.requestFullscreen) el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-      };
-    })();
-  </script>
+<body>
+<p>Opening the table…</p>
+<p>If nothing happens, open <a href="play.html">play.html</a> or <a href="PLAY-ME.htm">PLAY-ME.htm</a> in this folder.</p>
 </body>
 </html>
