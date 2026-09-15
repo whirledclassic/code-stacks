@@ -11,12 +11,18 @@ window.Profile = (function () {
     return raw;
   }
   function save(data) { if (window.CSUtil && CSUtil.store) CSUtil.store(KEY, data); }
+  function lineCount(state) {
+    if (!state) return 0;
+    if (typeof state.shippedLines === "number") return state.shippedLines;
+    if (state.lastGood && state.lastGood.length) return state.lastGood.length;
+    return state.lines ? state.lines.length : 0;
+  }
   function recordGame() { var d = load(); d.games += 1; save(d); return d; }
   function recordShip(state, burned) {
     var d = load();
     d.ships += 1;
     if (burned) d.burns += 1;
-    d.lines += (state && state.lines) ? state.lines.length : 0;
+    d.lines += lineCount(state);
     var combo = state && state.combo ? state.combo : 0;
     if (combo > (d.bestCombo || 0)) d.bestCombo = combo;
     save(d);
