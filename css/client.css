@@ -1,8 +1,9 @@
 html, body.client-shell { margin: 0; height: 100%; background: #07080d; color: #e7edf7; font-family: "Segoe UI", sans-serif; }
 .client-shell { min-height: 100%; height: 100%; display: flex; flex-direction: column; }
-.client-bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: #10141e; border-bottom: 1px solid #243044; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #8b97ab; }
-.client-bar .brand { color: #3de0ff; }
+.client-bar { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: linear-gradient(90deg, #0b0f18, #12182a); border-bottom: 1px solid #2a3344; }
+.client-bar .brand { color: #3de0ff; letter-spacing: .16em; text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 10px; }
+.client-bar .brand img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; }
 .client-bar .acts { display: flex; gap: 8px; }
-.client-bar button { background: #151b28; border: 1px solid #2a3344; color: #e7edf7; border-radius: 8px; padding: 6px 10px; letter-spacing: 0; text-transform: none; cursor: pointer; }
-.client-frame { flex: 1; width: 100%; border: 0; background: #07080d; min-height: 400px; }
-.client-note { padding: 8px 12px; font-size: 12px; color: #8b97ab; border-top: 1px solid #1c2433; }
+.client-bar button { background: #151b28; border: 1px solid #2a3344; color: #e7edf7; border-radius: 999px; padding: 7px 12px; cursor: pointer; font-size: 12px; }
+.client-frame { flex: 1; width: 100%; border: 0; min-height: 400px; }
+.client-note { padding: 8px 16px; font-size: 12px; color: #8b97ab; border-top: 1px solid #1c2433; }
