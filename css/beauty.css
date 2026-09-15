@@ -4,13 +4,17 @@ body { background: radial-gradient(900px 520px at 8% -8%, rgba(255,61,154,.28), 
 .btn.solo { width: 100%; margin-top: 8px; border: 0; border-radius: 10px; padding: 12px 16px; font-weight: 700; color: #14040c; background: linear-gradient(90deg, #ff3d9a, #ffb020); }
 .mission.on { border-color: rgba(124,255,107,.7); }
 .mission.locked { opacity: .4; }
-.sline { background: linear-gradient(90deg, rgba(61,224,255,.08), rgba(12,16,24,.92)); }
 .ship-meter { margin: 10px 12px 0; height: 18px; background: #0a0d14; border: 1px solid #243044; border-radius: 99px; position: relative; overflow: hidden; }
-.ship-meter b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #3de0ff, #7cff6b); transition: width .25s linear; }
-.ship-meter span { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 10px; line-height: 18px; color: #e7edf7; }
-.ship-meter.hot b { background: linear-gradient(90deg, #ffb020, #7cff6b); }
-.ship-meter.done b { background: #7cff6b; }
-.pill.combo { color: #8b97ab; }
-.pill.combo.on { color: #ffb020; box-shadow: 0 0 12px rgba(255,176,32,.45); }
-.exports-bag { margin: 8px 12px 0; font-size: 12px; color: #7cff6b; font-family: Consolas, Courier New, monospace; }
-.exports-bag span { display: inline-block; margin: 0 6px 6px 0; border: 1px solid #2a4a38; padding: 2px 8px; border-radius: 999px; background: #0c1512; }
+.ship-meter b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #3de0ff, #7cff6b); }
+.ship-meter span { position: absolute; top: 0; left: 0; right: 0; text-align: center; font-size: 10px; line-height: 18px; }
+.pill.combo.on { color: #ffb020; }
+.exports-bag span { display: inline-block; margin: 0 6px 6px 0; border: 1px solid #2a4a38; padding: 2px 8px; border-radius: 999px; color: #7cff6b; }
+.settings-card { text-align: left; max-width: 480px; }
+.set-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin: 16px 0 20px; font-size: 14px; color: #c5d4e7; }
+.set-grid label { display: flex; align-items: center; gap: 8px; }
+.set-grid .span { grid-column: 1 / -1; }
+.a11y-contrast { background: #000 !important; color: #fff !important; }
+.a11y-contrast .btn.primary { background: #fff; color: #000; }
+.a11y-large, .a11y-large button, .a11y-large input, .a11y-large textarea { font-size: 18px !important; }
+.a11y-motion * { animation: none !important; transition: none !important; }
+.btn:focus, input:focus, textarea:focus { outline: 2px solid #ffb020; outline-offset: 2px; }
