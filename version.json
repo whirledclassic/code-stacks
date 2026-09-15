@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "released": "2026-09-15",
-  "notes": "Animated boot splash, client.html, Ledger mission."
+  "notes": "Combo +4s, ship percent meter, star-gated missions."
 }
