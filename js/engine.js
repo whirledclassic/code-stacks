@@ -19,9 +19,9 @@ window.Engine = (function () {
   function annotate(err, code) {
     var msg = String(err && err.message ? err.message : err);
     var ln = err && (err.lineNumber || err.line);
-    var lines = String(code || "").split("\n");
     if (typeof ln === "number") {
       var idx = ln - 2;
+      var lines = String(code || "").split("\n");
       if (idx >= 1 && idx <= lines.length) msg += " (stack line " + idx + ")";
     }
     return msg;
@@ -30,6 +30,8 @@ window.Engine = (function () {
     try { new Function(code); return { ok: true }; }
     catch (e) { return { ok: false, type: "syntax", message: e.message, logs: [], checks: [] }; }
   }
+  function hasLanguage(id) { return !id || id === "javascript" || id === "js" || id === "JavaScript"; }
+  function languages() { return [{ id: "javascript", title: "JavaScript", ready: true }]; }
   function runLocal(payload) {
     var syn = syntaxCheck(payload.code);
     if (!syn.ok) return syn;
@@ -46,14 +48,12 @@ window.Engine = (function () {
     if (payload.mode !== "tests") {
       return { ok: true, type: "run", message: "ran", logs: cap.logs, checks: [], exportsKeys: Object.keys(exportsObj) };
     }
-    var results = [];
-    var all = true;
-    var checks = payload.checks || [];
+    var results = [], all = true, checks = payload.checks || [];
     for (var i = 0; i < checks.length; i++) {
       var c = checks[i];
       try {
         var fn = new Function("console", "exports", "stack", "\"use strict\";\n" + payload.code + "\n" + c.code);
-        fn(captureFactory()().console, {}, { file: "stack.js" });
+        fn(captureFactory()().console, {}, stack);
         results.push({ name: c.name, passed: true, message: "" });
       } catch (err) {
         all = false;
@@ -62,15 +62,17 @@ window.Engine = (function () {
     }
     return { ok: true, passed: all && checks.length > 0, type: "tests", message: all ? "All tests passed." : "Repo runs, spec is not green yet.", logs: cap.logs, checks: results, exportsKeys: Object.keys(exportsObj) };
   }
-  function runScript(code) {
+  function runScript(code, lang) {
+    if (!hasLanguage(lang)) return Promise.resolve({ ok: false, type: "engine", message: "No runner for " + lang + ". JavaScript only." });
     var syn = syntaxCheck(code);
     if (!syn.ok) return Promise.resolve(syn);
     return Promise.resolve(runLocal({ mode: "run", code: String(code || "") }));
   }
-  function runTests(code, checks) {
+  function runTests(code, checks, lang) {
+    if (!hasLanguage(lang)) return Promise.resolve({ ok: false, passed: false, type: "engine", message: "No runner for " + lang + ".", checks: [] });
     var syn = syntaxCheck(code);
     if (!syn.ok) return Promise.resolve({ ok: false, passed: false, type: syn.type, message: syn.message, logs: [], checks: [] });
     return Promise.resolve(runLocal({ mode: "tests", code: String(code || ""), checks: checks || [] }));
   }
-  return { syntaxCheck: syntaxCheck, runScript: runScript, runTests: runTests, runLocal: runLocal, LIMITS: LIMITS };
+  return { syntaxCheck: syntaxCheck, runScript: runScript, runTests: runTests, runLocal: runLocal, LIMITS: LIMITS, languages: languages, hasLanguage: hasLanguage };
 })();
