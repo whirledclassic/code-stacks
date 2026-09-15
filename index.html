@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="css/splash.css" />
   <link rel="stylesheet" href="css/play.css" />
   <style>
-    #news .card { max-width: 520px; text-align: left; }
-    #news-list { max-height: 360px; overflow-y: auto; margin: 12px 0 16px; padding-right: 8px; }
+    #news .card, #trophies .card { max-width: 520px; text-align: left; }
+    #news-list, #trophy-list { max-height: 360px; overflow-y: auto; margin: 12px 0 16px; padding-right: 8px; }
     .news-item { border-bottom: 1px solid #243044; padding: 10px 0; }
     .news-item strong { color: #3de0ff; margin-right: 8px; }
     .news-item em { color: #8b97ab; font-style: normal; font-size: 12px; }
@@ -23,10 +23,10 @@
   <div id="boot"><div class="logo-stack"><i></i><i></i><i></i></div><div class="boot-name">CODE STACKER</div><div class="boot-bar"><b></b></div></div>
   <div class="app">
     <section id="splash" class="splash">
-      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">JavaScript and Tiny. One line. Then vote export or destroy.</p><div class="hero-actions"><span class="pill">v1.27.0</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button><button class="btn ghost" id="btn-news" type="button">Updates</button></div></div></div>
+      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">JavaScript and Tiny. One line. Then vote export or destroy.</p><div class="hero-actions"><span class="pill">v1.28.0</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button><button class="btn ghost" id="btn-news" type="button">Updates</button></div></div></div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">JS missions plus Tiny Blood (print CODE STACKS). Updates lists patches. SETUP.bat installs the client.</p>
+        <p class="lead">Local trophies and ship stats live on this machine. Open Trophies on the splash.</p>
         <div class="field"><label>Stackers</label><div class="row"><input id="new-name" type="text" maxlength="18" placeholder="Name, then enter" /><button class="btn ghost" id="add-player" type="button">Add</button></div><div id="player-chips" class="chips" style="margin-top:10px"></div></div>
         <div class="field"><label>Mission</label><div id="missions" class="missions"></div></div>
         <div class="opts"><div class="field"><label>Seconds per turn</label><input id="turn-sec" type="number" min="15" max="120" value="45" /></div><div class="field"><label>Fails before you're out</label><input id="fails-out" type="number" min="2" max="6" value="3" /></div></div>
@@ -59,6 +59,8 @@
   <script src="js/settings.js"></script>
   <script src="js/fx.js"></script>
   <script src="js/progress.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/trophies.js"></script>
   <script src="js/game.js"></script>
   <script src="js/core-patch.js"></script>
   <script src="js/vote.js"></script>
