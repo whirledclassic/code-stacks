@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "released": "2026-09-15",
-  "notes": "Looping music bed, SFX mix, full DOCS.md."
+  "notes": "Stability patch: updater version sync, solo first-submit starts the turn, default mission."
 }
