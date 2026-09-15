@@ -2,53 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>if (location.protocol.indexOf("file") === 0) location.replace("client.html");</script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CODE STACKS — Code Stacker</title>
+  <title>CODE STACKS</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/art.css" />
-  <link rel="stylesheet" href="css/beauty.css" />
-  <link rel="stylesheet" href="css/splash.css" />
-  <link rel="stylesheet" href="css/play.css" />
-  <style>
-    #news .card, #trophies .card { max-width: 520px; text-align: left; }
-    #news-list, #trophy-list { max-height: 360px; overflow-y: auto; margin: 12px 0 16px; padding-right: 8px; }
-    .news-item { border-bottom: 1px solid #243044; padding: 10px 0; }
-    .news-item strong { color: #3de0ff; }
-    .news-item p { margin: 6px 0 0; color: #c5d4e7; font-size: 14px; }
-    #console-logs { margin-top: 8px; color: #7cff6b; font-family: Consolas, Courier New, monospace; white-space: pre-wrap; }
-  </style>
 </head>
 <body>
-  <div id="boot"><div class="logo-stack"><i></i><i></i><i></i></div><div class="boot-name">CODE STACKER</div><div class="boot-bar"><b></b></div></div>
-  <div class="app">
-    <section id="splash" class="splash">
-      <div class="hero"><div class="hero-copy"><div class="brand">CODE STACKER</div><h1>CODE<br /><span>STACKS</span></h1><p class="tag">Click once for sound. JavaScript and Tiny. Vote export or destroy.</p><div class="hero-actions"><span class="pill">v1.28.3</span><button class="btn ghost" id="btn-how" type="button">How it works</button><button class="btn ghost" id="btn-settings" type="button">Settings</button><button class="btn ghost" id="btn-news" type="button">Updates</button></div></div></div>
-      <div class="setup">
-        <h2>Open a repo</h2>
-        <p class="lead">First click unlocks music and beeps. Exe: BUILD-CLIENT.bat then CodeStacks.exe.</p>
-        <div class="field"><label>Stackers</label><div class="row"><input id="new-name" type="text" maxlength="18" placeholder="Name, then enter" /><button class="btn ghost" id="add-player" type="button">Add</button></div><div id="player-chips" class="chips" style="margin-top:10px"></div></div>
-        <div class="field"><label>Mission</label><div id="missions" class="missions"></div></div>
-        <div class="opts"><div class="field"><label>Seconds per turn</label><input id="turn-sec" type="number" min="15" max="120" value="45" /></div><div class="field"><label>Fails before you're out</label><input id="fails-out" type="number" min="2" max="6" value="3" /></div></div>
-        <button class="btn primary" id="btn-start" type="button">Start stacking</button>
-        <button class="btn solo" id="btn-solo" type="button">Practice solo</button>
-      </div>
-    </section>
-    <section id="game" class="hidden" style="display:flex;flex-direction:column;min-height:100vh">
-      <header class="topbar"><div class="left"><div class="wordmark">CODE <span>STACKS</span></div><span id="mission-pill" class="pill"></span><span id="stack-pill" class="pill">0 lines</span><span id="combo-pill" class="pill combo">COMBO</span></div><div class="right"><div id="timer" class="timer">0:45</div><button class="btn ghost" id="btn-mute" type="button">Sound on</button><button class="btn ghost" id="btn-quit" type="button">Quit</button></div></header>
-      <div class="board">
-        <aside class="col"><h3>The stack</h3><div id="stack-list" class="stack-list"></div></aside>
-        <main class="col maincol"><h3>Live file</h3><pre id="source-view" class="source-view">// empty</pre><div class="editor-wrap"><div class="who"><div><div id="phase-tag" class="phase-tag play">STACK A LINE</div><div id="who-name" class="name">-</div></div><div id="who-fail" class="fail"></div></div><textarea id="line-input" class="editor" rows="2" maxlength="320"></textarea><div class="actions"><button class="btn primary" id="btn-stack" type="button">Stack line</button><button class="btn ghost" id="btn-hint" type="button">Peek hint</button></div></div><div id="console" class="console"></div></main>
-        <aside class="col"><h3>Mission spec</h3><div id="spec" class="spec"></div><div id="ship-meter" class="ship-meter"><b></b><span>0% to ship</span></div><div id="exports-bag" class="exports-bag"></div><h3 id="checks-head">Spec tests</h3><div id="checks" class="checks"></div><h3>Stackers</h3><div id="players" class="players"></div></aside>
-      </div>
-    </section>
-  </div>
-  <div id="handoff" class="overlay hidden"><div class="card"><div id="handoff-name" class="big">Player</div><button class="btn primary" id="btn-begin" type="button">Start turn</button></div></div>
-  <div id="end" class="overlay hidden"><div class="card"><h2 id="end-title">REPO SHIPS</h2><p id="end-body"></p><div id="vote-row" class="hidden" style="margin:16px 0"><button class="btn primary" id="btn-export" type="button">Export project</button><button class="btn ghost" id="btn-destroy" type="button">Destroy it</button></div><button class="btn primary" id="btn-download" type="button">Download</button><button class="btn ghost" id="btn-replay" type="button">Replay</button><button class="btn ghost" id="btn-again" type="button">Menu</button></div></div>
-  <div id="settings" class="overlay hidden" role="dialog"><div class="card settings-card"><h2>Settings</h2><div class="set-grid"><label><input id="set-music" type="checkbox" /> Game music</label><label><input id="set-sfx" type="checkbox" /> Sound effects</label><label class="span">Volume <input id="set-volume" type="range" min="0" max="1" step="0.05" /></label><label>Default seconds <input id="set-turn" type="number" min="15" max="120" /></label><label>Fails before out <input id="set-fails" type="number" min="2" max="6" /></label><label><input id="set-motion" type="checkbox" /> Reduce motion</label><label><input id="set-contrast" type="checkbox" /> High contrast</label><label><input id="set-large" type="checkbox" /> Larger text</label><label><input id="set-boot" type="checkbox" /> Skip boot splash</label></div><button class="btn primary" id="btn-settings-close" type="button">Done</button></div></div>
-  <div id="news" class="overlay hidden" role="dialog"><div class="card"><h2>Updates</h2><div id="news-list"></div><button class="btn primary" id="btn-news-close" type="button">Close</button></div></div>
-  <div id="how" class="overlay hidden"><div class="card"><h2>How it works</h2><ol class="how-list"><li>One line per turn.</li><li>JS: exports. Tiny: print TEXT.</li><li>Ship, then vote export or destroy.</li></ol><button class="btn primary" id="btn-how-close" type="button">Got it</button></div></div>
-  <div id="toast" class="toast hidden"></div>
+  <p><a href="client.html">Open the table</a></p>
   <script src="js/compat.js"></script>
   <script src="js/updater.js"></script>
   <script src="js/missions.js"></script>
@@ -56,18 +16,10 @@
   <script src="js/tiny.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/music.js"></script>
-  <script src="js/audio-boot.js"></script>
   <script src="js/settings.js"></script>
-  <script src="js/fx.js"></script>
   <script src="js/progress.js"></script>
-  <script src="js/profile.js"></script>
-  <script src="js/trophies.js"></script>
   <script src="js/game.js"></script>
-  <script src="js/core-patch.js"></script>
   <script src="js/vote.js"></script>
   <script src="js/ui.js"></script>
-  <script src="js/qol.js"></script>
-  <script src="js/news.js"></script>
-  <script src="js/immerse.js"></script>
-  <script>setTimeout(function(){var b=document.getElementById("boot");if(!b)return;if(window.Settings&&Settings.load().skipBoot){if(b.parentNode)b.parentNode.removeChild(b);return;}b.className="off";setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},600);},1800);</script>
-</body></html>
+</body>
+</html>
