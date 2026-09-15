@@ -1,0 +1,8 @@
+html, body.client-shell { margin: 0; height: 100%; background: #07080d; color: #e7edf7; font-family: "Segoe UI", sans-serif; }
+.client-shell { min-height: 100%; display: flex; flex-direction: column; }
+.client-bar { height: 44px; flex: 0 0 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: #10141e; border-bottom: 1px solid #243044; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #8b97ab; }
+.client-bar .brand { color: #3de0ff; letter-spacing: .2em; }
+.client-bar .acts { display: flex; gap: 8px; }
+.client-bar button { background: #151b28; border: 1px solid #2a3344; color: #e7edf7; border-radius: 8px; padding: 6px 10px; letter-spacing: 0; text-transform: none; cursor: pointer; }
+.client-frame { flex: 1; width: 100%; border: 0; background: #07080d; min-height: 0; }
+.client-note { padding: 8px 12px; font-size: 12px; color: #8b97ab; border-top: 1px solid #1c2433; }

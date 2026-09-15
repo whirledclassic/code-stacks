@@ -1,1 +1,34 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>CODE STACKS Client</title><link rel="stylesheet" href="css/style.css" /><link rel="stylesheet" href="css/splash.css" /></head><body class="client-shell"><div class="client-bar"><span>CODE STACKS · client</span><span><button type="button" onclick="location.href='index.html'">Open web table</button><button type="button" onclick="document.getElementById('frame').src='index.html'">Reload table</button></span></div><iframe id="frame" class="client-frame" src="index.html" title="Code Stacks table"></iframe></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CODE STACKS Client</title>
+  <link rel="stylesheet" href="css/client.css" />
+</head>
+<body class="client-shell">
+  <div class="client-bar">
+    <span class="brand">CODE STACKS · client</span>
+    <span class="acts">
+      <button type="button" id="btn-reload">Reload table</button>
+      <button type="button" id="btn-full">Full window</button>
+      <button type="button" id="btn-tab">Open in tab</button>
+    </span>
+  </div>
+  <iframe id="frame" class="client-frame" src="index.html" title="Code Stacks table" allow="autoplay"></iframe>
+  <div class="client-note">Play client. Click once inside the table so music can start. Leave PLAY.bat running.</div>
+  <script>
+    (function () {
+      var frame = document.getElementById("frame");
+      document.getElementById("btn-reload").onclick = function () { frame.src = "index.html?t=" + Date.now(); };
+      document.getElementById("btn-tab").onclick = function () { window.location.href = "index.html"; };
+      document.getElementById("btn-full").onclick = function () {
+        var el = document.documentElement;
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      };
+    })();
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "released": "2026-09-15",
-  "notes": "One-click INSTALL.bat, PLAY.bat, UPDATE.bat, Win7 download helpers."
+  "notes": "Dedicated client.html play window. PLAY.bat opens the client."
 }
