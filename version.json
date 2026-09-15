@@ -1,6 +1,6 @@
 {
   "name": "CODE STACKS",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "released": "2026-09-15",
-  "notes": "Dedicated client.html play window. PLAY.bat opens the client."
+  "notes": "CodeStacks.exe launcher (build with BUILD-CLIENT.bat) + app-window client."
 }
