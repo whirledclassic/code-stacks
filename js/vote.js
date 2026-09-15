@@ -18,21 +18,28 @@
       if (t) { t.textContent = "Votes  export " + r.export + "  /  destroy " + r.destroy + "  (need " + r.need + ")"; t.classList.remove("hidden"); }
       return;
     }
+    var s = state();
+    if (s && !s._profiled && window.Profile) {
+      s._profiled = true;
+      Profile.recordShip(s, r.result === "destroy");
+    }
     if ($("vote-row")) $("vote-row").classList.add("hidden");
     if ($("end-title")) $("end-title").textContent = r.result === "destroy" ? "STACK BURNED" : "REPO SHIPS";
-    if ($("end-body")) $("end-body").textContent = (state() && state().winnerNote) || "";
+    if ($("end-body")) $("end-body").textContent = (s && s.winnerNote) || "";
     if (r.result === "export" && $("btn-download")) $("btn-download").classList.remove("hidden");
     if (r.result === "export" && window.SFX) SFX.win();
     if (r.result === "destroy" && window.SFX) SFX.out();
+    if (window.Trophies) Trophies.paint();
   }
   function boot() {
     if (window.Game && !Game._voteWrapped) {
       Game._voteWrapped = true;
       var inner = Game.create;
       Game.create = function (opts) {
-        var s = inner(opts);
-        window._csState = s;
-        return s;
+        var st = inner(opts);
+        window._csState = st;
+        if (window.Profile) Profile.recordGame();
+        return st;
       };
     }
     if ($("btn-export")) $("btn-export").onclick = function () {
