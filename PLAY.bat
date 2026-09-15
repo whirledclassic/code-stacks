@@ -1,30 +1,21 @@
 @echo off
-setlocal
-title CODE STACKS
 cd /d "%~dp0"
-echo CODE STACKS  http://localhost:8765
-set URL=http://localhost:8765/client.html
-if not exist "%~dp0client.html" set URL=http://localhost:8765/
-where py >nul 2>&1
-if %errorlevel%==0 (
-  start "" "%URL%"
-  py -3 -m http.server 8765
-  goto eof
+title CODE STACKS
+if not exist "%~dp0index.html" (
+  echo index.html missing
+  pause
+  goto :eof
 )
-where python >nul 2>&1
-if %errorlevel%==0 (
-  start "" "%URL%"
-  python -m http.server 8765
-  goto eof
+set GAME=%~dp0index.html
+set BROWSER=
+if exist "%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe" set BROWSER=%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe
+if not defined BROWSER if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" set BROWSER=%ProgramFiles%\Google\Chrome\Application\chrome.exe
+if not defined BROWSER if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" set BROWSER=%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe
+if not defined BROWSER if exist "%ProgramFiles%\Mozilla Firefox\firefox.exe" set BROWSER=%ProgramFiles%\Mozilla Firefox\firefox.exe
+if not defined BROWSER if exist "%ProgramFiles(x86)%\Mozilla Firefox\firefox.exe" set BROWSER=%ProgramFiles(x86)%\Mozilla Firefox\firefox.exe
+if defined BROWSER (
+  start "" "%BROWSER%" "%GAME%"
+) else (
+  start "" "%GAME%"
 )
-where python3 >nul 2>&1
-if %errorlevel%==0 (
-  start "" "%URL%"
-  python3 -m http.server 8765
-  goto eof
-)
-echo Python not found. Opening files directly.
-start "" "%~dp0client.html"
-if errorlevel 1 start "" "%~dp0index.html"
 pause
-endlocal
