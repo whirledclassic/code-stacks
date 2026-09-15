@@ -1,6 +1,10 @@
 (function () {
   function $(id) { return document.getElementById(id); }
   function state() { return window._csState; }
+  function snapshot(s) {
+    if (!s) return;
+    s.shippedLines = s.lines ? s.lines.length : 0;
+  }
   function paintVote(s) {
     if (!s || s.phase !== "vote") return;
     var end = $("end"); if (!end) return;
@@ -44,10 +48,12 @@
     }
     if ($("btn-export")) $("btn-export").onclick = function () {
       if (!window.Game || !state()) return;
+      snapshot(state());
       resolve(Game.castVote(state(), "export"));
     };
     if ($("btn-destroy")) $("btn-destroy").onclick = function () {
       if (!window.Game || !state()) return;
+      snapshot(state());
       resolve(Game.castVote(state(), "destroy"));
     };
     setInterval(function () { paintVote(state()); }, 300);
