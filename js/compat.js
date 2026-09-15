@@ -1,5 +1,19 @@
-/* Windows 7 / older-Chromium shims. Not an IE11 port. */
 (function () {
+  if (!window.Promise) {
+    window.Promise = function (fn) {
+      var ok = null, bad = null, val = null, err = null, settled = 0;
+      this.then = function (a, b) {
+        ok = a; bad = b;
+        if (settled === 1 && ok) ok(val);
+        if (settled === 2 && bad) bad(err);
+        return this;
+      };
+      function res(v) { if (settled) return; settled = 1; val = v; if (ok) ok(v); }
+      function rej(e) { if (settled) return; settled = 2; err = e; if (bad) bad(e); }
+      try { fn(res, rej); } catch (e) { rej(e); }
+    };
+    window.Promise.resolve = function (v) { return new Promise(function (r) { r(v); }); };
+  }
   function pad(value, width, ch) {
     var s = String(value);
     var c = ch || "0";
@@ -10,13 +24,6 @@
     pad: pad,
     loadBuffer: function (url) {
       return new Promise(function (resolve, reject) {
-        if (window.fetch) {
-          fetch(url).then(function (res) {
-            if (!res.ok) throw new Error(url);
-            return res.arrayBuffer();
-          }).then(resolve, reject);
-          return;
-        }
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.responseType = "arraybuffer";
@@ -25,7 +32,7 @@
           else reject(new Error(url));
         };
         xhr.onerror = function () { reject(new Error(url)); };
-        xhr.send();
+        try { xhr.send(); } catch (e) { reject(e); }
       });
     },
     decodeAudio: function (ctx, arr) {
@@ -33,9 +40,7 @@
         try {
           var maybe = ctx.decodeAudioData(arr, resolve, reject);
           if (maybe && typeof maybe.then === "function") maybe.then(resolve, reject);
-        } catch (e) {
-          reject(e);
-        }
+        } catch (e) { reject(e); }
       });
     },
     store: function (key, val) {
@@ -47,57 +52,26 @@
         return raw ? JSON.parse(raw) : null;
       } catch (e) { return null; }
     },
-    isLegacyIE: function () {
-      return !!(document.documentMode);
-    }
+    isLegacyIE: function () { return !!(document.documentMode); }
   };
-
-  if (!String.prototype.padStart) {
-    String.prototype.padStart = function (w, ch) { return pad(this, w, ch); };
-  }
+  if (!String.prototype.padStart) String.prototype.padStart = function (w, ch) { return pad(this, w, ch); };
   if (!Object.assign) {
     Object.assign = function (t) {
       for (var i = 1; i < arguments.length; i++) {
-        var s = arguments[i];
-        if (!s) continue;
+        var s = arguments[i]; if (!s) continue;
         for (var k in s) if (Object.prototype.hasOwnProperty.call(s, k)) t[k] = s[k];
       }
       return t;
     };
   }
-  if (!Object.entries) {
-    Object.entries = function (obj) {
-      var out = [];
-      for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) out.push([k, obj[k]]);
-      return out;
+  if (!Object.keys) {
+    Object.keys = function (obj) {
+      var o = []; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) o.push(k); return o;
     };
   }
-  if (!Array.prototype.includes) {
-    Array.prototype.includes = function (v) {
-      return this.indexOf(v) !== -1;
-    };
+  if (!Array.prototype.includes) Array.prototype.includes = function (v) { return this.indexOf(v) !== -1; };
+  if (!window.AudioContext && window.webkitAudioContext) window.AudioContext = window.webkitAudioContext;
+  if (document.documentMode) {
+    document.write("<div style='padding:20px;background:#4a0010;color:#fff;font-family:sans-serif'>Internet Explorer cannot run CODE STACKS. Install Chrome 109 or Firefox 115 ESR, then right-click index.html and Open with that browser.</div>");
   }
-  if (!Array.prototype.find) {
-    Array.prototype.find = function (fn) {
-      for (var i = 0; i < this.length; i++) if (fn(this[i], i, this)) return this[i];
-    };
-  }
-  if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = window.webkitRequestAnimationFrame || function (cb) { return setTimeout(function () { cb(Date.now()); }, 16); };
-  }
-  if (!window.AudioContext && window.webkitAudioContext) {
-    window.AudioContext = window.webkitAudioContext;
-  }
-  if (!window.URL && window.webkitURL) {
-    window.URL = window.webkitURL;
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    if (window.CSUtil.isLegacyIE()) {
-      var bar = document.createElement("div");
-      bar.className = "ie-banner";
-      bar.innerHTML = "Internet Explorer on Windows 7 cannot run Code Stacks. Install Firefox 115 ESR or Chrome 109 (last Win7 builds), then reopen this page.";
-      document.body.insertBefore(bar, document.body.firstChild);
-    }
-  });
 })();
