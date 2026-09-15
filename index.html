@@ -25,14 +25,15 @@
             <div class="rule"><span class="num">04</span><span>Keep stacking until the mission tests go green.</span></div>
           </div>
           <div class="hero-actions">
-            <span class="pill">v1.4 · JS · Win7 + modern</span>
+            <span class="pill">v1.5.0 · JS · Win7</span>
             <button class="btn ghost" id="btn-how" type="button">How it works</button>
+            <button class="btn ghost" id="btn-update" type="button" onclick="alert('Close the browser and double-click update.bat in the code-stacks folder.');">Update</button>
           </div>
         </div>
       </div>
       <div class="setup">
         <h2>Open a repo</h2>
-        <p class="lead">Add players or stack solo. On Windows 7 use Chrome 109 or Firefox 115 ESR.</p>
+        <p class="lead">Add players or stack solo. On Windows 7 use Chrome 109 or Firefox 115 ESR. To patch an old copy, close this tab and run update.bat.</p>
         <div class="langlock"><span>Language this version</span><b>JavaScript</b></div>
         <div class="field">
           <label>Stackers</label>
@@ -130,6 +131,7 @@
   </div>
   <div id="toast" class="toast hidden"></div>
   <script src="js/compat.js"></script>
+  <script src="js/updater.js"></script>
   <script src="js/missions.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/audio.js"></script>
